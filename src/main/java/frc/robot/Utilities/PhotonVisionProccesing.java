@@ -14,7 +14,6 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -30,6 +29,10 @@ public class PhotonVisionProccesing {
     PhotonPoseEstimator poseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, kRobotToCam);
 
 
+    /**
+     * @param camName name of the camera to use for vision processing
+     * @param camToCenter distance in meters and degrees to center 
+     */
     public PhotonVisionProccesing(String camName, Transform3d camToCenter) {
         camera = new PhotonCamera(camName);
         kRobotToCam = camToCenter;
