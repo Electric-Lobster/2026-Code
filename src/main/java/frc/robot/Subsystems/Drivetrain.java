@@ -6,6 +6,7 @@ package frc.robot.Subsystems;
 
 import com.revrobotics.spark.SparkMax;
 
+import choreo.trajectory.DifferentialSample;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,6 +24,14 @@ public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
   public Drivetrain() {
     driveSystem.ConfigureMotors(fL, fR, bL, bR);
+  }
+
+  public void tankDrive(double left, double right) {
+    driveSystem.tankDrive(left, right);
+  }
+
+  public void trajectoryFollow(DifferentialSample sample) {
+    driveSystem.followTrajectory(sample);
   }
 
   @Override
