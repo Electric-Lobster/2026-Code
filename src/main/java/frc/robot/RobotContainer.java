@@ -4,13 +4,19 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Subsystems.Drivetrain;
 
 public class RobotContainer {
 
-  Drivetrain m_Drivetrain = new Drivetrain();
+  Joystick lJoystick = new Joystick(0);
+  Joystick rJoystick = new Joystick(1);
+  XboxController controller = new XboxController(2);
+
+  Drivetrain m_Drivetrain = new Drivetrain(lJoystick, rJoystick);
 
   public RobotContainer() {
     configureBindings();
