@@ -10,7 +10,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Commands.TempDefaultDrive;
 import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Subsystems.TempDrive;
 
 public class RobotContainer {
 
@@ -19,15 +21,18 @@ public class RobotContainer {
   XboxController controller = new XboxController(2);
 
   AutoChooser m_AutoChooser = new AutoChooser();
+  
+  TempDrive tDrive = new TempDrive();
+  TempDefaultDrive tempDefaultDrive = new TempDefaultDrive(tDrive, lJoystick, rJoystick);
 
-  Drivetrain m_Drivetrain = new Drivetrain(lJoystick, rJoystick);
+  //Drivetrain m_Drivetrain = new Drivetrain(lJoystick, rJoystick);
 
-  AutoContainer m_AutoContainer = new AutoContainer(m_Drivetrain);
+  //AutoContainer m_AutoContainer = new AutoContainer(m_Drivetrain);
 
   public RobotContainer() {
     configureBindings();
 
-    configureChooser();
+    //configureChooser();
   }
 
   private void configureBindings() {}
@@ -35,7 +40,7 @@ public class RobotContainer {
   private void configureChooser() {
     SmartDashboard.putData(m_AutoChooser);
 
-    m_AutoChooser.addRoutine("Test 1: Straight", m_AutoContainer::testRoutine);
+    //m_AutoChooser.addRoutine("Test 1: Straight", m_AutoContainer::testRoutine);
     m_AutoChooser.select("Test 1: Straight");
   }
 
