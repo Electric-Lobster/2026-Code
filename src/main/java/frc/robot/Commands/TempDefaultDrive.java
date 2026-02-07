@@ -32,7 +32,7 @@ public class TempDefaultDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    tempDrive.tankdrive(lJoy.getY(), rJoy.getY());
+    tempDrive.tankdrive(-lJoy.getY(), -rJoy.getY());
   }
 
   // Called once the command ends or is interrupted.
