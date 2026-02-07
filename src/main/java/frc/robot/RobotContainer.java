@@ -23,13 +23,15 @@ public class RobotContainer {
   AutoChooser m_AutoChooser = new AutoChooser();
   
   TempDrive tDrive = new TempDrive();
-  TempDefaultDrive tempDefaultDrive = new TempDefaultDrive(tDrive, lJoystick, rJoystick);
 
   //Drivetrain m_Drivetrain = new Drivetrain(lJoystick, rJoystick);
 
   //AutoContainer m_AutoContainer = new AutoContainer(m_Drivetrain);
 
   public RobotContainer() {
+
+    tDrive.setDefaultCommand(new TempDefaultDrive(tDrive, lJoystick, rJoystick));
+
     configureBindings();
 
     //configureChooser();
