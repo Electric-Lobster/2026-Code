@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class TempDrive extends SubsystemBase {
 
-  VictorSPX fL = new VictorSPX(1);
-  VictorSPX fR = new VictorSPX(2);
-  VictorSPX bL = new VictorSPX(3);
+  VictorSPX fL = new VictorSPX(2);
+  VictorSPX fR = new VictorSPX(3);
+  VictorSPX bL = new VictorSPX(1);
   VictorSPX bR = new VictorSPX(4);
 
   /** Creates a new TempDrive. */
