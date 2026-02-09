@@ -27,7 +27,7 @@ import frc.robot.Utilities.PhotonVisionProccesing;
 public class Shooter extends SubsystemBase {
 
   // MOTORS
-  VictorSPX turretMotor = new VictorSPX(100);
+  VictorSPX turretMotor = new VictorSPX(50);
 
   // PIDS
   PIDController turretPID = new PIDController(1, 0, 0);
@@ -35,7 +35,7 @@ public class Shooter extends SubsystemBase {
   // Utilities
   Pose2d turretPos = new Pose2d();
 
-  PhotonVisionProccesing turretCam = new PhotonVisionProccesing("pass", new Transform3d(0,0,0, new Rotation3d(0, 0, 0)));
+  PhotonVisionProccesing turretCam = new PhotonVisionProccesing("Arducam OV9281 USB Camera", new Transform3d(0,0,0, new Rotation3d(0, 0, 0)));
   
   Field2d turretFieldView = new Field2d();
 
