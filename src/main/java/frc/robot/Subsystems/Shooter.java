@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
   VictorSPX turretMotor = new VictorSPX(100);
 
   // PIDS
-  PIDController turretPID = new PIDController(0, 0, 0);
+  PIDController turretPID = new PIDController(1, 0, 0);
 
   // Utilities
   Pose2d turretPos = new Pose2d();
