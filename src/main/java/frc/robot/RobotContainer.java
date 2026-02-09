@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Commands.TempDefaultDrive;
 import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Subsystems.Shooter;
 import frc.robot.Subsystems.TempDrive;
 
 public class RobotContainer {
@@ -23,6 +24,7 @@ public class RobotContainer {
   AutoChooser m_AutoChooser = new AutoChooser();
   
   TempDrive tDrive = new TempDrive();
+  Shooter sm_Shooter = new Shooter();
 
   //Drivetrain m_Drivetrain = new Drivetrain(lJoystick, rJoystick);
 

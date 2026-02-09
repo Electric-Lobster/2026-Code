@@ -22,6 +22,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Commands.DefaultShooter;
 import frc.robot.Utilities.PhotonVisionProccesing;
 
 public class Shooter extends SubsystemBase {
@@ -39,12 +40,14 @@ public class Shooter extends SubsystemBase {
   
   Field2d turretFieldView = new Field2d();
 
-  /** Creates a new Shooter. */
+  /** Creates a nsew Shooter. */
   public Shooter() {
     SmartDashboard.putData(turretFieldView);
 
     turretMotor.setNeutralMode(NeutralMode.Brake);
     turretMotor.setInverted(false);
+
+    setDefaultCommand(new DefaultShooter(this));
 
   }
 
