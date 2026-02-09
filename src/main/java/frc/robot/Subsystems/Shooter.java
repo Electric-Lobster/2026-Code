@@ -36,7 +36,7 @@ public class Shooter extends SubsystemBase {
   // Utilities
   Pose2d turretPos = new Pose2d();
 
-  PhotonVisionProccesing turretCam = new PhotonVisionProccesing("Arducam OV9281 USB Camera", new Transform3d(0,0,0, new Rotation3d(0, 0, 0)));
+  PhotonVisionProccesing turretCam = new PhotonVisionProccesing("Arducam_OV9281_USB_Camera", new Transform3d(0,0,0, new Rotation3d(0, 0, 0)));
   
   Field2d turretFieldView = new Field2d();
 
@@ -68,6 +68,8 @@ public class Shooter extends SubsystemBase {
     throttle = MathUtil.clamp(throttle, -0.25, 0.25);
 
     setTurretThrottle(throttle);
+
+    SmartDashboard.putNumber("throttle", throttle);
   }
 
 

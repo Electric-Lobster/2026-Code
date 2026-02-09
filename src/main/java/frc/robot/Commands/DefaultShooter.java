@@ -32,6 +32,8 @@ public class DefaultShooter extends Command {
   @Override
   public void execute() {
 
+    shooter.updateTurretPos(new Pose2d());
+
     Pose2d test = new Pose2d(4.625, 4.031, new Rotation2d(0));
 
     shooter.targetPosition(test);
