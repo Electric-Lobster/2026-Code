@@ -36,7 +36,7 @@ public class DefaultShooter extends Command {
 
     Pose2d test = new Pose2d(4.625, 4.031, new Rotation2d(0));
 
-    shooter.targetPosition(test);
+    shooter.lookAtPosition(test);
 
   }
 

@@ -19,19 +19,25 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Commands.DefaultShooter;
 import frc.robot.Utilities.PhotonVisionProccesing;
+import pabeles.concurrency.ConcurrencyOps.Reset;
 
 public class Shooter extends SubsystemBase {
 
   // MOTORS
   VictorSPX turretMotor = new VictorSPX(50);
 
+  // ENCODERS
+  Encoder turretEncoder = new Encoder(0, 1);
+
   // PIDS
   PIDController turretPID = new PIDController(1, 0, 0);
+  PIDController turretPID2 = new PIDController(0.1, 0, 0);
 
   // Utilities
   Pose2d turretPos = new Pose2d();
@@ -47,6 +53,9 @@ public class Shooter extends SubsystemBase {
     turretMotor.setNeutralMode(NeutralMode.Brake);
     turretMotor.setInverted(false);
 
+    // pulses per rev * gear ratio * degrees per revolution
+    turretEncoder.setDistancePerPulse(7 * 27 * 360);
+
     setDefaultCommand(new DefaultShooter(this));
 
   }
@@ -56,8 +65,23 @@ public class Shooter extends SubsystemBase {
     turretMotor.set(ControlMode.PercentOutput, throttle);
   }
 
+
+  public boolean setTurretPosition(double pos) {
+    double throttle = turretPID2.calculate(turretEncoder.getDistance(), pos);
+
+    setTurretThrottle(throttle);
+
+    if (turretPID2.atSetpoint()) {
+      setTurretThrottle(0);
+      return false;
+    } else {
+      return true;
+    }
+
+  }
   
-  public void targetPosition(Pose2d target) {
+
+  public void lookAtPosition(Pose2d target) {
 
     Transform2d posError = target.minus(turretPos);
 
@@ -79,6 +103,10 @@ public class Shooter extends SubsystemBase {
     turretFieldView.setRobotPose(turretPos);
   }
 
+
+  public void resetEncoder() {
+    turretEncoder.reset();
+  }
 
   @Override
   public void periodic() {
