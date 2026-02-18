@@ -23,8 +23,8 @@ public class RobotContainer {
 
   AutoChooser m_AutoChooser = new AutoChooser();
   
-  TempDrive tDrive = new TempDrive();
-  Shooter m_Shooter = new Shooter();
+  public TempDrive tDrive = new TempDrive();
+  public Shooter m_Shooter = new Shooter();
 
   //Drivetrain m_Drivetrain = new Drivetrain(lJoystick, rJoystick);
 
