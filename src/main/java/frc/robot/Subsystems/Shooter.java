@@ -19,6 +19,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,6 +35,9 @@ public class Shooter extends SubsystemBase {
 
   // ENCODERS
   Encoder turretEncoder = new Encoder(0, 1);
+
+  // LIMIT SWITCHES
+  DigitalInput turretSoftStop = new DigitalInput(9);
 
   // PIDS
   PIDController turretPID = new PIDController(1, 0, 0);
@@ -103,6 +107,14 @@ public class Shooter extends SubsystemBase {
     turretFieldView.setRobotPose(turretPos);
   }
 
+
+  public boolean getTurretAtSoftStop() {
+    return turretSoftStop.get();
+  }
+
+  public double getTurretrelativAngle() {
+    return turretEncoder.getDistance();
+  }
 
   public void resetEncoder() {
     turretEncoder.reset();
