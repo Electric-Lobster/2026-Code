@@ -55,11 +55,20 @@ public class Shooter extends SubsystemBase {
   }
 
 
+  /**
+   * Sets the throttle of the turret motor
+   * @param throttle throttle to send to  turret motor
+   */
   public void setTurretThrottle(double throttle) {
     turretMotor.set(ControlMode.PercentOutput, throttle);
   }
 
 
+  /**
+   * moves the turret to desired position
+   * @param pos desired position to move to
+   * @return if turret is at desired position
+   */
   public boolean setTurretPosition(double pos) {
     double throttle = turretAnglePID.calculate(turretEncoder.getDistance(), pos);
 
@@ -75,6 +84,11 @@ public class Shooter extends SubsystemBase {
   }
   
 
+  /**
+   * moves turret to look at position on the field
+   * @param target position on the field
+   * @deprecated
+   */
   public void lookAtPosition(Pose2d target) {
 
     Transform2d posError = target.minus(turretPos);
@@ -91,6 +105,11 @@ public class Shooter extends SubsystemBase {
   }
 
 
+  /**
+   * updates the field relative turret position
+   * @param robotPose the pose of the robot frame, used for manual pose estimation
+   * @deprecated
+   */
   public void updateTurretPos(Pose2d robotPose) {
     turretPos = turretCam.GetBestPose(robotPose);
 
@@ -98,17 +117,31 @@ public class Shooter extends SubsystemBase {
   }
 
 
+  /**
+   * checks if the turret is at the softstop
+   * @return if turret is at softstop
+   */
   public boolean getTurretAtSoftStop() {
     return turretSoftStop.get();
   }
 
-  public double getTurretrelativAngle() {
+
+  /**
+   * returns the turrets relative angle to the robot frame
+   * @return the angle relative 
+   */
+  public double getTurretrelativeAngle() {
     return turretEncoder.getDistance();
   }
 
+
+  /**
+   * resets the turret encoder
+   */
   public void resetEncoder() {
     turretEncoder.reset();
   }
+
 
   @Override
   public void periodic() {

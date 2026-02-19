@@ -45,7 +45,7 @@ public class HomeTurret extends Command {
 
         shooter.setTurretThrottle( 1);
 
-        if (shooter.getTurretrelativAngle() > 10) {
+        if (shooter.getTurretrelativeAngle() > 10) {
           homingState = 2;
         }
 
