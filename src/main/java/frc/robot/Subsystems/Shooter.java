@@ -31,8 +31,7 @@ public class Shooter extends SubsystemBase {
   DigitalInput turretSoftStop = new DigitalInput(9);
 
   // PIDS
-  PIDController turretPID = new PIDController(1, 0, 0);
-  PIDController turretPID2 = new PIDController(0.1, 0, 0);
+  PIDController turretAnglePID = new PIDController(0.1, 0, 0);
 
   // Utilities
   Pose2d turretPos = new Pose2d();
@@ -62,11 +61,11 @@ public class Shooter extends SubsystemBase {
 
 
   public boolean setTurretPosition(double pos) {
-    double throttle = turretPID2.calculate(turretEncoder.getDistance(), pos);
+    double throttle = turretAnglePID.calculate(turretEncoder.getDistance(), pos);
 
     setTurretThrottle(throttle);
 
-    if (turretPID2.atSetpoint()) {
+    if (turretAnglePID.atSetpoint()) {
       setTurretThrottle(0);
       return false;
     } else {
@@ -82,7 +81,7 @@ public class Shooter extends SubsystemBase {
 
     double desiredAngle = Math.atan(posError.getY() / posError.getX());
 
-    double throttle = turretPID.calculate(turretPos.getRotation().getRadians(), desiredAngle);
+    double throttle = turretAnglePID.calculate(turretPos.getRotation().getRadians(), desiredAngle);
 
     throttle = MathUtil.clamp(throttle, -0.25, 0.25);
 
