@@ -60,7 +60,7 @@ public class Shooter extends SubsystemBase {
     // pulses per rev * gear ratio * degrees per revolution
     turretEncoder.setDistancePerPulse(7 * 27 * 360);
 
-    setDefaultCommand(new DefaultShooter(this));
+    //setDefaultCommand(new DefaultShooter(this));
 
   }
 
