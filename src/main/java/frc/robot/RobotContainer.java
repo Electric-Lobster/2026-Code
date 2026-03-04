@@ -9,9 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Commands.TempDefaultDrive;
 import frc.robot.Subsystems.Drivetrain;
-import frc.robot.Subsystems.TempDrive;
 
 public class RobotContainer {
 
@@ -20,16 +18,12 @@ public class RobotContainer {
   XboxController controller = new XboxController(2);
 
   AutoChooser m_AutoChooser = new AutoChooser();
-  
-  public TempDrive tDrive = new TempDrive();
 
   //Drivetrain m_Drivetrain = new Drivetrain(lJoystick, rJoystick);
 
   //AutoContainer m_AutoContainer = new AutoContainer(m_Drivetrain);
 
   public RobotContainer() {
-
-    tDrive.setDefaultCommand(new TempDefaultDrive(tDrive, lJoystick, rJoystick));
 
     configureBindings();
 
