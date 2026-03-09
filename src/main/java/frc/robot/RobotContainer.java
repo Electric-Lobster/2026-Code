@@ -19,10 +19,13 @@ public class RobotContainer {
 
   AutoChooser m_AutoChooser = new AutoChooser();
 
-  //Drivetrain m_Drivetrain = new Drivetrain(lJoystick, rJoystick);
 
-  //AutoContainer m_AutoContainer = new AutoContainer(m_Drivetrain);
+  Drivetrain m_Drivetrain = new Drivetrain(lJoystick, rJoystick);
 
+
+  AutoContainer m_AutoContainer = new AutoContainer(m_Drivetrain);
+
+  
   public RobotContainer() {
 
     configureBindings();
@@ -35,7 +38,7 @@ public class RobotContainer {
   private void configureChooser() {
     SmartDashboard.putData(m_AutoChooser);
 
-    //m_AutoChooser.addRoutine("Test 1: Straight", m_AutoContainer::testRoutine);
+    m_AutoChooser.addRoutine("Test 1: Straight", m_AutoContainer::testRoutine);
     m_AutoChooser.select("Test 1: Straight");
   }
 
