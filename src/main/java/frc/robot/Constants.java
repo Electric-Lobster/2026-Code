@@ -9,10 +9,10 @@ public class Constants {
 
     public static class DriveTrainConstants {
 
-        public static final int FLDrive = 1;
-        public static final int BLDrive = 2;
-        public static final int FRDrive = 3;
-        public static final int BRDrive = 4;
+        public static final int FLDrive = 2;
+        public static final int BLDrive = 3;
+        public static final int FRDrive = 4;
+        public static final int BRDrive = 5;
 
     }
 }
