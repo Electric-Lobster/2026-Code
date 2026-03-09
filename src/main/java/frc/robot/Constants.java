@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.units.PerUnit;
+
 /** Add your docs here. */
 public class Constants {
 
@@ -14,5 +16,13 @@ public class Constants {
         public static final int FRDrive = 4;
         public static final int BRDrive = 5;
 
+    }
+
+    public static class ShooterConstants {
+        public static final int INDEXER = 7;
+        public static final int ELEVATOR = 8;
+        public static final int FLYWHEEL = 9;
+
+        public static final int[] INDEXERLIMITS = {20, 5, 50};
     }
 }
