@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.signals.InvertedValue;
+
 /** Add your docs here. */
 public class Constants {
 
@@ -26,5 +28,6 @@ public class Constants {
 
         public static final boolean INDEXERINVERT = false;
         public static final boolean ELEVATORINVERT = false;
+        public static final InvertedValue FLYWHEELINVERT = InvertedValue.Clockwise_Positive;
     }
 }

@@ -8,11 +8,17 @@ import static frc.robot.Constants.ShooterConstants.ELEVATOR;
 import static frc.robot.Constants.ShooterConstants.ELEVATORCURRANTLIMITS;
 import static frc.robot.Constants.ShooterConstants.ELEVATORINVERT;
 import static frc.robot.Constants.ShooterConstants.FLYWHEEL;
+import static frc.robot.Constants.ShooterConstants.FLYWHEELINVERT;
 import static frc.robot.Constants.ShooterConstants.INDEXER;
 import static frc.robot.Constants.ShooterConstants.INDEXERCURRANTLIMITS;
 import static frc.robot.Constants.ShooterConstants.INDEXERINVERT;
 
+import java.net.PasswordAuthentication;
+
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
@@ -24,6 +30,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
 
+  //MOTORS
   SparkMax indexer = new SparkMax(INDEXER, MotorType.kBrushless);
   SparkMax elevator = new SparkMax(ELEVATOR, MotorType.kBrushed);
   TalonFX flywheel = new TalonFX(FLYWHEEL);
@@ -41,6 +48,8 @@ public class Shooter extends SubsystemBase {
 
     indexer.configure(indexerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     elevator.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  
+    flywheel.getConfigurator().apply( new MotorOutputConfigs().withInverted(FLYWHEELINVERT).withNeutralMode(NeutralModeValue.Brake));
   }
 
   @Override
