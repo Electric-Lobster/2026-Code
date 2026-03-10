@@ -31,6 +31,15 @@ public class BallSystem extends SubsystemBase {
   PIDController flywheelPID = new PIDController(0.5, 1, 0);
   SimpleMotorFeedforward flywheelFeedforward = new SimpleMotorFeedforward(1.5, 0.1);
 
+  //System control variables
+  public boolean manualIntake = false;
+
+  public boolean shoot = false;
+
+  public boolean flywheelOn = false;
+  public double flywheelDesiredSpeed = 0;
+  
+
   /** Creates a new Shooter. */
   public BallSystem() {
 
@@ -112,7 +121,7 @@ public class BallSystem extends SubsystemBase {
 
   private void updateFlywheel() {}
 
-  
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
