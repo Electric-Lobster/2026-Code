@@ -110,7 +110,7 @@ public class BallSystem extends SubsystemBase {
     runFlywheel(pidVal + feedfowardVal);
 
     SmartDashboard.putNumber("Flywheel Desired Speed", speed);
-    SmartDashboard.putNumber("Flywheel Throttle", feedfowardVal);
+    SmartDashboard.putNumber("Flywheel Throttle", pidVal + feedfowardVal);
     SmartDashboard.putNumber("Flywheel Error", speed - filteredVelocity);
   }
 
