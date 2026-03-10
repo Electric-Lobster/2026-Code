@@ -28,7 +28,7 @@ public class Constants {
         public static final int[] INDEXERCURRANTLIMITS = {20, 5, 50}; // Stall current, free current, stall currant rpm
         public static final int[] ELEVATORCURRANTLIMITS = {20, 5, 50}; // Stall current, free current, stall currant rpm
 
-        public static final boolean INTAKEINVERT = false;
+        public static final boolean INTAKEINVERT = true;
         public static final boolean INDEXERINVERT = false;
         public static final boolean ELEVATORINVERT = true;
         public static final InvertedValue FLYWHEELINVERT = InvertedValue.Clockwise_Positive;
