@@ -92,6 +92,27 @@ public class BallSystem extends SubsystemBase {
   }
 
 
+  public void update() {
+
+    updateIntake();
+
+    updateIndexer();
+
+    updateElevator();
+
+    updateFlywheel();
+
+  }
+
+  private void updateIntake() {}
+
+  private void updateIndexer() {}
+
+  private void updateElevator() {}
+
+  private void updateFlywheel() {}
+
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
