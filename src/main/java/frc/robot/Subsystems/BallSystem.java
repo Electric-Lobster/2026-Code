@@ -5,6 +5,7 @@
 package frc.robot.Subsystems;
 
 import static frc.robot.Constants.BallSystemConstants.*;
+
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -17,8 +18,11 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Commands.DefaultBallSystem;
 
 public class BallSystem extends SubsystemBase {
 
@@ -39,10 +43,12 @@ public class BallSystem extends SubsystemBase {
 
   public boolean flywheelOn = false;
   public double flywheelDesiredSpeed = 0;
+
+  private double filteredVelocity = 0;
   
 
   /** Creates a new Shooter. */
-  public BallSystem() {
+  public BallSystem(Joystick leftJoy, Joystick rightJoy, XboxController controller) {
 
     SparkMaxConfig intakeConfig = new SparkMaxConfig();
     SparkMaxConfig indexerConfig = new SparkMaxConfig();
@@ -61,9 +67,11 @@ public class BallSystem extends SubsystemBase {
     elevator.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   
     flywheel.getConfigurator().apply( new MotorOutputConfigs().withInverted(FLYWHEELINVERT).withNeutralMode(NeutralModeValue.Brake));
-  
 
-    flywheelPID.setTolerance(2);
+    flywheelPID.setTolerance(4);
+  
+    
+    setDefaultCommand(new DefaultBallSystem(this, leftJoy, rightJoy, controller));
   }
 
 
@@ -96,19 +104,19 @@ public class BallSystem extends SubsystemBase {
 
   public void setFlywheelSpeed(double speed) {
 
-    double pidVal = flywheelPID.calculate(flywheel.getVelocity().getValueAsDouble(), speed);
-    double feedfowardVal = flywheelFeedforward.calculateWithVelocities(flywheel.getVelocity().getValueAsDouble(), speed);
+    double pidVal = flywheelPID.calculate(filteredVelocity, speed);
+    double feedfowardVal = flywheelFeedforward.calculateWithVelocities(filteredVelocity, speed);
 
     runFlywheel(pidVal + feedfowardVal);
 
     SmartDashboard.putNumber("Flywheel Desired Speed", speed);
     SmartDashboard.putNumber("Flywheel Throttle", feedfowardVal);
-    SmartDashboard.putNumber("Flywheel Error", speed - flywheel.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("Flywheel Error", speed - filteredVelocity);
   }
 
 
   public boolean flywheelAtSpeed() {
-    return flywheelPID.atSetpoint();
+    return flywheelPID.atSetpoint() && flywheelDesiredSpeed > 0;
   }
 
 
@@ -125,8 +133,12 @@ public class BallSystem extends SubsystemBase {
   }
 
   private void updateIntake() {
-    if ( manualIntake || (shoot && flywheelAtSpeed()) ) {
+    if ( shoot && flywheelAtSpeed()) {
+      runIntake(INTAKEAGITATESPEED);
+
+    } else if (manualIntake) {
       runIntake(INTAKESPEED);
+
     } else {
       runIntake(0);
     }
@@ -157,6 +169,11 @@ public class BallSystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+
+    if (!SmartDashboard.containsKey("Slew Rate")) {SmartDashboard.putNumber("Slew Rate", 0) ;}
+
+    double slewRate = SmartDashboard.getNumber("Slew Rate", 0);
+
+    filteredVelocity = (filteredVelocity * slewRate) + (flywheel.getVelocity().getValueAsDouble() * (1 - slewRate));
   }
 }

@@ -102,9 +102,9 @@ public class BallSystemFunctionTest extends Command {
         case 7:
         SmartDashboard.putString("Function Test", "Function: Flywheel 100 + shoot");
         ballSystem.manualIntake = false;
-        ballSystem.shoot = false;
-        ballSystem.flywheelOn = false;
-        ballSystem.flywheelDesiredSpeed = 0;
+        ballSystem.shoot = true;
+        ballSystem.flywheelOn = true;
+        ballSystem.flywheelDesiredSpeed = 100;
         break;
 
         case 8:

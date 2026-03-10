@@ -27,7 +27,7 @@ public class RobotContainer {
 
   Drivetrain m_Drivetrain = new Drivetrain(lJoystick, rJoystick);
 
-  BallSystem m_BallSystem = new BallSystem();
+  BallSystem m_BallSystem = new BallSystem(lJoystick, rJoystick, controller);
 
 
   AutoContainer m_AutoContainer = new AutoContainer(m_Drivetrain);
@@ -55,7 +55,7 @@ public class RobotContainer {
 
   public Command getTestCommand() {
     return Commands.sequence(
-      new BallSystemTestBasic(m_BallSystem, 5),
+      new BallSystemTestBasic(m_BallSystem, 7),
       new BallSystemFunctionTest(m_BallSystem, 5)
     );
   }
