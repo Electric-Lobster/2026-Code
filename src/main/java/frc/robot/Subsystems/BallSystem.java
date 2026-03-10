@@ -14,6 +14,9 @@ import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class BallSystem extends SubsystemBase {
@@ -23,6 +26,10 @@ public class BallSystem extends SubsystemBase {
   SparkMax indexer = new SparkMax(INDEXER, MotorType.kBrushless);
   SparkMax elevator = new SparkMax(ELEVATOR, MotorType.kBrushed);
   TalonFX flywheel = new TalonFX(FLYWHEEL);
+
+  //Flywheel Control
+  PIDController flywheelPID = new PIDController(0.5, 1, 0);
+  SimpleMotorFeedforward flywheelFeedforward = new SimpleMotorFeedforward(1.5, 0.1);
 
   /** Creates a new Shooter. */
   public BallSystem() {
@@ -46,6 +53,7 @@ public class BallSystem extends SubsystemBase {
     flywheel.getConfigurator().apply( new MotorOutputConfigs().withInverted(FLYWHEELINVERT).withNeutralMode(NeutralModeValue.Brake));
   }
 
+
   public void runIntake(double throttle) {
     
     intake.set(throttle);
@@ -66,8 +74,21 @@ public class BallSystem extends SubsystemBase {
 
   public void runFlywheel(double voltage) {
 
+    voltage = MathUtil.clamp(voltage, 0, 14);
+
     flywheel.setVoltage(voltage);
 
+  }
+
+
+  public boolean setFlywheelSpeed(double speed) {
+
+    double pidVal = flywheelPID.calculate(flywheel.getVelocity().getValueAsDouble(), speed);
+    double feedfowardVal = flywheelFeedforward.calculateWithVelocities(flywheel.getVelocity().getValueAsDouble(), speed);
+
+    runFlywheel(pidVal + feedfowardVal);
+
+    return (speed - flywheel.getVelocity().getValueAsDouble()) < 2;
   }
 
 
