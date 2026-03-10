@@ -33,7 +33,7 @@ public class BallSystem extends SubsystemBase {
   TalonFX flywheel = new TalonFX(FLYWHEEL);
 
   //Flywheel Control
-  PIDController flywheelPID = new PIDController(0.5, 1, 0);
+  PIDController flywheelPID = new PIDController(1, 1, 0.15);
   SimpleMotorFeedforward flywheelFeedforward = new SimpleMotorFeedforward(1.5, 0.1);
 
   //System control variables
@@ -170,10 +170,6 @@ public class BallSystem extends SubsystemBase {
   @Override
   public void periodic() {
 
-    if (!SmartDashboard.containsKey("Slew Rate")) {SmartDashboard.putNumber("Slew Rate", 0) ;}
-
-    double slewRate = SmartDashboard.getNumber("Slew Rate", 0);
-
-    filteredVelocity = (filteredVelocity * slewRate) + (flywheel.getVelocity().getValueAsDouble() * (1 - slewRate));
+    filteredVelocity = (filteredVelocity * 0.95) + (flywheel.getVelocity().getValueAsDouble() * 0.05);
   }
 }
