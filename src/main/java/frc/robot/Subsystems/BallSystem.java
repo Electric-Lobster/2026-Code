@@ -60,6 +60,9 @@ public class BallSystem extends SubsystemBase {
     elevator.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   
     flywheel.getConfigurator().apply( new MotorOutputConfigs().withInverted(FLYWHEELINVERT).withNeutralMode(NeutralModeValue.Brake));
+  
+
+    flywheelPID.setTolerance(2);
   }
 
 
@@ -90,14 +93,17 @@ public class BallSystem extends SubsystemBase {
   }
 
 
-  public boolean setFlywheelSpeed(double speed) {
+  public void setFlywheelSpeed(double speed) {
 
     double pidVal = flywheelPID.calculate(flywheel.getVelocity().getValueAsDouble(), speed);
     double feedfowardVal = flywheelFeedforward.calculateWithVelocities(flywheel.getVelocity().getValueAsDouble(), speed);
 
     runFlywheel(pidVal + feedfowardVal);
+  }
 
-    return (speed - flywheel.getVelocity().getValueAsDouble()) < 2;
+
+  public boolean flywheelAtSpeed() {
+    return flywheelPID.atSetpoint();
   }
 
 
@@ -113,13 +119,35 @@ public class BallSystem extends SubsystemBase {
 
   }
 
-  private void updateIntake() {}
+  private void updateIntake() {
+    if ( manualIntake || (shoot && flywheelAtSpeed()) ) {
+      runIntake(INTAKESPEED);
+    } else {
+      runIntake(0);
+    }
+  }
 
-  private void updateIndexer() {}
+  private void updateIndexer() {
+    if (shoot && flywheelAtSpeed()) {
+      runIndexer(INDEXERSPEED);
+    } else {
+      runIndexer(0);
+    }
+  }
 
-  private void updateElevator() {}
+  private void updateElevator() {
+    if (shoot && flywheelAtSpeed()) {
+      runElevator(ELEVATORSPEED);
+    } else {
+      runElevator(0);
+    }
+  }
 
-  private void updateFlywheel() {}
+  private void updateFlywheel() {
+
+    setFlywheelSpeed( (flywheelOn) ? flywheelDesiredSpeed : 0 );
+
+  }
 
 
   @Override

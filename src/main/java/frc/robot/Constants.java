@@ -32,5 +32,11 @@ public class Constants {
         public static final boolean INDEXERINVERT = false;
         public static final boolean ELEVATORINVERT = true;
         public static final InvertedValue FLYWHEELINVERT = InvertedValue.Clockwise_Positive;
+
+
+
+        public static final double INTAKESPEED = 1;
+        public static final double INDEXERSPEED = 0.5;
+        public static final double ELEVATORSPEED = 1;
     }
 }
