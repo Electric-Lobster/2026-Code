@@ -63,6 +63,10 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     CommandScheduler.getInstance().cancelAll();
+
+    Command testCommand = m_robotContainer.getTestCommand();
+
+    CommandScheduler.getInstance().schedule(testCommand);
   }
 
   @Override

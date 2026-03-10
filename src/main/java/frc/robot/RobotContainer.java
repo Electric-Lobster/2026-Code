@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Commands.Test.BallSystemTestBasic;
+import frc.robot.Subsystems.BallSystem;
 import frc.robot.Subsystems.Drivetrain;
 
 public class RobotContainer {
@@ -17,10 +20,13 @@ public class RobotContainer {
   Joystick rJoystick = new Joystick(1);
   XboxController controller = new XboxController(2);
 
+
   AutoChooser m_AutoChooser = new AutoChooser();
 
 
   Drivetrain m_Drivetrain = new Drivetrain(lJoystick, rJoystick);
+
+  BallSystem m_BallSystem = new BallSystem();
 
 
   AutoContainer m_AutoContainer = new AutoContainer(m_Drivetrain);
@@ -44,5 +50,11 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return m_AutoChooser.selectedCommand();
+  }
+
+  public Command getTestCommand() {
+    return Commands.sequence(
+      new BallSystemTestBasic(m_BallSystem, 5)
+    );
   }
 }
