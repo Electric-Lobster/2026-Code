@@ -36,6 +36,7 @@ public class DefaultBallSystem extends Command {
 
     //TODO remove this
     if ( !SmartDashboard.containsKey("Shoot") ) { SmartDashboard.putBoolean("Shoot", false); }
+    if ( !SmartDashboard.containsKey("Reverse") ) { SmartDashboard.putBoolean("Reverse", false); }
     if ( !SmartDashboard.containsKey("Flywheel") ) { SmartDashboard.putBoolean("Flywheel", false); }
     if ( !SmartDashboard.containsKey("Intake") ) { SmartDashboard.putBoolean("Intake", false); }
     if ( !SmartDashboard.containsKey("Speed") ) { SmartDashboard.putNumber("Speed", 0); }
@@ -46,6 +47,7 @@ public class DefaultBallSystem extends Command {
   public void execute() {
     ballSystem.manualIntake = SmartDashboard.getBoolean("Intake", false);
     ballSystem.shoot = SmartDashboard.getBoolean("Shoot", false);
+    ballSystem.reverseIndexer = SmartDashboard.getBoolean("Reverse", false);
     ballSystem.flywheelOn = SmartDashboard.getBoolean("Flywheel", false);
     ballSystem.flywheelDesiredSpeed = SmartDashboard.getNumber("Speed", 0);
 

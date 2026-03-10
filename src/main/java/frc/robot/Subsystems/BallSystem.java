@@ -41,6 +41,8 @@ public class BallSystem extends SubsystemBase {
 
   public boolean shoot = false;
 
+  public boolean reverseIndexer = false;
+
   public boolean flywheelOn = false;
   public double flywheelDesiredSpeed = 0;
 
@@ -116,7 +118,7 @@ public class BallSystem extends SubsystemBase {
 
 
   public boolean flywheelAtSpeed() {
-    return flywheelPID.atSetpoint() && flywheelDesiredSpeed > 0;
+    return flywheelPID.atSetpoint() && flywheelDesiredSpeed > 1 && flywheelOn;
   }
 
 
@@ -133,7 +135,10 @@ public class BallSystem extends SubsystemBase {
   }
 
   private void updateIntake() {
-    if ( shoot && flywheelAtSpeed()) {
+    if (reverseIndexer) {
+      runIntake(INTAKEREVERSESPEED);
+
+    } else if ( shoot && flywheelAtSpeed()) {
       runIntake(INTAKEAGITATESPEED);
 
     } else if (manualIntake) {
@@ -145,7 +150,10 @@ public class BallSystem extends SubsystemBase {
   }
 
   private void updateIndexer() {
-    if (shoot && flywheelAtSpeed()) {
+
+    if (reverseIndexer) {
+      runIndexer(INDEXERREVERSESPEED);
+    } else if (shoot && flywheelAtSpeed()) {
       runIndexer(INDEXERSPEED);
     } else {
       runIndexer(0);
@@ -153,7 +161,7 @@ public class BallSystem extends SubsystemBase {
   }
 
   private void updateElevator() {
-    if (shoot && flywheelAtSpeed()) {
+    if (shoot && flywheelAtSpeed() && (! reverseIndexer)) {
       runElevator(ELEVATORSPEED);
     } else {
       runElevator(0);
