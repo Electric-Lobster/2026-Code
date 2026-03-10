@@ -52,6 +52,24 @@ public class Shooter extends SubsystemBase {
     flywheel.getConfigurator().apply( new MotorOutputConfigs().withInverted(FLYWHEELINVERT).withNeutralMode(NeutralModeValue.Brake));
   }
 
+  public void runIndexer(double throttle) {
+
+    indexer.set(throttle);
+
+  }
+
+  public void runElevator(double throttle) {
+
+    elevator.set(throttle);
+
+  }
+
+  public void runFlywheel(double voltage) {
+
+    flywheel.setVoltage(voltage);
+
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
