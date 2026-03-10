@@ -31,8 +31,8 @@ public class BallSystem extends SubsystemBase {
     SparkMaxConfig indexerConfig = new SparkMaxConfig();
     SparkMaxConfig elevatorConfig = new SparkMaxConfig();
 
-    indexerConfig.encoder.positionConversionFactor(1).velocityConversionFactor(1);
-    indexerConfig.smartCurrentLimit(INTAKECURRANTLIMITS[0], INTAKECURRANTLIMITS[1], INTAKECURRANTLIMITS[2]).inverted(INTAKEINVERT).idleMode(IdleMode.kBrake);
+    intakeConfig.encoder.positionConversionFactor(1).velocityConversionFactor(1);
+    intakeConfig.smartCurrentLimit(INTAKECURRANTLIMITS[0], INTAKECURRANTLIMITS[1], INTAKECURRANTLIMITS[2]).inverted(INTAKEINVERT).idleMode(IdleMode.kBrake);
 
     indexerConfig.encoder.positionConversionFactor(1).velocityConversionFactor(1);
     indexerConfig.smartCurrentLimit(INDEXERCURRANTLIMITS[0], INDEXERCURRANTLIMITS[1], INDEXERCURRANTLIMITS[2]).inverted(INDEXERINVERT).idleMode(IdleMode.kBrake);
@@ -70,7 +70,7 @@ public class BallSystem extends SubsystemBase {
 
   }
 
-  
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
