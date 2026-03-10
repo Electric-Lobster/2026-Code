@@ -71,6 +71,7 @@ public class BallSystemTestBasic extends Command {
         break;
     }
   
+    SmartDashboard.putNumber("Motors Tested", motorsTested);
     SmartDashboard.putNumber("Stage Throttle", throttle);
   
   }

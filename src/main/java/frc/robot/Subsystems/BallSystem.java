@@ -17,6 +17,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class BallSystem extends SubsystemBase {
@@ -99,6 +100,10 @@ public class BallSystem extends SubsystemBase {
     double feedfowardVal = flywheelFeedforward.calculateWithVelocities(flywheel.getVelocity().getValueAsDouble(), speed);
 
     runFlywheel(pidVal + feedfowardVal);
+
+    SmartDashboard.putNumber("Flywheel Desired Speed", speed);
+    SmartDashboard.putNumber("Flywheel Throttle", feedfowardVal);
+    SmartDashboard.putNumber("Flywheel Error", speed - flywheel.getVelocity().getValueAsDouble());
   }
 
 
