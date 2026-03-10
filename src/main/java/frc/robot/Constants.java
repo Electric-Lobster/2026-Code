@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.units.PerUnit;
-
 /** Add your docs here. */
 public class Constants {
 
@@ -23,6 +21,10 @@ public class Constants {
         public static final int ELEVATOR = 8;
         public static final int FLYWHEEL = 9;
 
-        public static final int[] INDEXERLIMITS = {20, 5, 50};
+        public static final int[] INDEXERCURRANTLIMITS = {20, 5, 50}; // Stall current, free current, stall currant rpm
+        public static final int[] ELEVATORCURRANTLIMITS = {20, 5, 50}; // Stall current, free current, stall currant rpm
+
+        public static final boolean INDEXERINVERT = false;
+        public static final boolean ELEVATORINVERT = false;
     }
 }

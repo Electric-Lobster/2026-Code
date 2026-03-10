@@ -5,11 +5,17 @@
 package frc.robot.Subsystems;
 
 import static frc.robot.Constants.ShooterConstants.ELEVATOR;
+import static frc.robot.Constants.ShooterConstants.ELEVATORCURRANTLIMITS;
+import static frc.robot.Constants.ShooterConstants.ELEVATORINVERT;
 import static frc.robot.Constants.ShooterConstants.FLYWHEEL;
 import static frc.robot.Constants.ShooterConstants.INDEXER;
+import static frc.robot.Constants.ShooterConstants.INDEXERCURRANTLIMITS;
+import static frc.robot.Constants.ShooterConstants.INDEXERINVERT;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -29,10 +35,12 @@ public class Shooter extends SubsystemBase {
     SparkMaxConfig elevatorConfig = new SparkMaxConfig();
     
     indexerConfig.encoder.positionConversionFactor(1).velocityConversionFactor(1);
-    indexerConfig.smartCurrentLimit(10, 10, 10).inverted(false).idleMode(IdleMode.kBrake);
+    indexerConfig.smartCurrentLimit(INDEXERCURRANTLIMITS[0], INDEXERCURRANTLIMITS[1], INDEXERCURRANTLIMITS[2]).inverted(INDEXERINVERT).idleMode(IdleMode.kBrake);
 
-    elevatorConfig.smartCurrentLimit(10, 10, 10).inverted(false).idleMode(IdleMode.kBrake);
+    elevatorConfig.smartCurrentLimit(ELEVATORCURRANTLIMITS[0], ELEVATORCURRANTLIMITS[1], ELEVATORCURRANTLIMITS[2]).inverted(ELEVATORINVERT).idleMode(IdleMode.kBrake);
 
+    indexer.configure(indexerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    elevator.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   @Override
