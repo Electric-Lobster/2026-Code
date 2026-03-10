@@ -4,20 +4,9 @@
 
 package frc.robot.Subsystems;
 
-import static frc.robot.Constants.ShooterConstants.ELEVATOR;
-import static frc.robot.Constants.ShooterConstants.ELEVATORCURRANTLIMITS;
-import static frc.robot.Constants.ShooterConstants.ELEVATORINVERT;
-import static frc.robot.Constants.ShooterConstants.FLYWHEEL;
-import static frc.robot.Constants.ShooterConstants.FLYWHEELINVERT;
-import static frc.robot.Constants.ShooterConstants.INDEXER;
-import static frc.robot.Constants.ShooterConstants.INDEXERCURRANTLIMITS;
-import static frc.robot.Constants.ShooterConstants.INDEXERINVERT;
-
-import java.net.PasswordAuthentication;
-
+import static frc.robot.Constants.BallSystemConstants.*;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.PersistMode;
@@ -25,31 +14,42 @@ import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Shooter extends SubsystemBase {
+public class BallSystem extends SubsystemBase {
 
   //MOTORS
+  SparkMax intake = new SparkMax(INTAKE, MotorType.kBrushless);
   SparkMax indexer = new SparkMax(INDEXER, MotorType.kBrushless);
   SparkMax elevator = new SparkMax(ELEVATOR, MotorType.kBrushed);
   TalonFX flywheel = new TalonFX(FLYWHEEL);
 
   /** Creates a new Shooter. */
-  public Shooter() {
+  public BallSystem() {
 
+    SparkMaxConfig intakeConfig = new SparkMaxConfig();
     SparkMaxConfig indexerConfig = new SparkMaxConfig();
     SparkMaxConfig elevatorConfig = new SparkMaxConfig();
-    
+
+    indexerConfig.encoder.positionConversionFactor(1).velocityConversionFactor(1);
+    indexerConfig.smartCurrentLimit(INTAKECURRANTLIMITS[0], INTAKECURRANTLIMITS[1], INTAKECURRANTLIMITS[2]).inverted(INTAKEINVERT).idleMode(IdleMode.kBrake);
+
     indexerConfig.encoder.positionConversionFactor(1).velocityConversionFactor(1);
     indexerConfig.smartCurrentLimit(INDEXERCURRANTLIMITS[0], INDEXERCURRANTLIMITS[1], INDEXERCURRANTLIMITS[2]).inverted(INDEXERINVERT).idleMode(IdleMode.kBrake);
 
     elevatorConfig.smartCurrentLimit(ELEVATORCURRANTLIMITS[0], ELEVATORCURRANTLIMITS[1], ELEVATORCURRANTLIMITS[2]).inverted(ELEVATORINVERT).idleMode(IdleMode.kBrake);
 
+    intake.configure(intakeConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     indexer.configure(indexerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     elevator.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   
     flywheel.getConfigurator().apply( new MotorOutputConfigs().withInverted(FLYWHEELINVERT).withNeutralMode(NeutralModeValue.Brake));
+  }
+
+  public void runIntake(double throttle) {
+    
+    intake.set(throttle);
+
   }
 
   public void runIndexer(double throttle) {
@@ -70,6 +70,7 @@ public class Shooter extends SubsystemBase {
 
   }
 
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
