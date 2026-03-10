@@ -54,7 +54,7 @@ public class RobotContainer {
 
   public Command getTestCommand() {
     return Commands.sequence(
-      new BallSystemTestBasic(m_BallSystem, 5)
+      new BallSystemTestBasic(m_BallSystem, 10)
     );
   }
 }

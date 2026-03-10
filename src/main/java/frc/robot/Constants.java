@@ -30,7 +30,7 @@ public class Constants {
 
         public static final boolean INTAKEINVERT = false;
         public static final boolean INDEXERINVERT = false;
-        public static final boolean ELEVATORINVERT = false;
+        public static final boolean ELEVATORINVERT = true;
         public static final InvertedValue FLYWHEELINVERT = InvertedValue.Clockwise_Positive;
     }
 }

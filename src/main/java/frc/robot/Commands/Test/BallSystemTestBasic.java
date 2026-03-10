@@ -6,6 +6,7 @@ package frc.robot.Commands.Test;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.BallSystem;
 
@@ -52,20 +53,27 @@ public class BallSystemTestBasic extends Command {
     switch (motorsTested) {
       case 0:
         ballSystem.runIntake(throttle);
+        SmartDashboard.putString("Motor Stage", "Intake");
         break;
       
       case 1:
         ballSystem.runIndexer(throttle);
+        SmartDashboard.putString("Motor Stage", "Indexer");
         break;
       
       case 2:
         ballSystem.runElevator(throttle);
+        SmartDashboard.putString("Motor Stage", "Elevator");
         break;
       
       case 3:
         ballSystem.runFlywheel(throttle * 14);
+        SmartDashboard.putString("Motor Stage", "Flywheel");
         break;
     }
+  
+    SmartDashboard.putNumber("Stage Throttle", throttle);
+  
   }
 
   // Called once the command ends or is interrupted.
@@ -75,6 +83,9 @@ public class BallSystemTestBasic extends Command {
     ballSystem.runIndexer(0);
     ballSystem.runElevator(0);
     ballSystem.runFlywheel(0);
+
+    SmartDashboard.putString("Motor Stage", "Not Testing");
+    SmartDashboard.putNumber("Stage Throttle", 0);
   }
 
   // Returns true when the command should end.
