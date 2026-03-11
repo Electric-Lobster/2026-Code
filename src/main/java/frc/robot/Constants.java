@@ -52,8 +52,18 @@ public class Constants {
     
         private static final double[] TABLEDATA = {
             //Distance, Speed
-            0.0, 0.0,
-            10.0, 100.0
+            1.0, 48,
+            1.25, 48.07,
+            2, 52.19,
+            2.5, 54.28,
+            3, 58.08,
+            3.5, 62.05,
+            3.75, 62.22,
+            4, 64.59,
+            4.5, 67.58,
+            5, 72.12,
+            5.5, 74.86,
+            6, 77.74
         };
 
         public static final LookupTable LOOKUPTABLE = new LookupTable(TABLEDATA);
