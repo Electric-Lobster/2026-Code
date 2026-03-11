@@ -84,6 +84,22 @@ public class BallSystemFunctionTest extends Command {
         break;
 
         case 5:
+        SmartDashboard.putString("Function Test", "Function: Flywheel 10 + reverse indexer");
+        ballSystem.manualIntake = false;
+        ballSystem.shoot = false;
+        ballSystem.flywheelOn = true;
+        ballSystem.flywheelDesiredSpeed = 10;
+        break;
+
+        case 6:
+        SmartDashboard.putString("Function Test", "Function: Flywheel 10 + reverse indexer + shoot");
+        ballSystem.manualIntake = false;
+        ballSystem.shoot = true;
+        ballSystem.flywheelOn = true;
+        ballSystem.flywheelDesiredSpeed = 10;
+        break;
+
+        case 7:
         SmartDashboard.putString("Function Test", "Function: Flywheel 50 + shoot");
         ballSystem.manualIntake = false;
         ballSystem.shoot = true;
@@ -91,28 +107,12 @@ public class BallSystemFunctionTest extends Command {
         ballSystem.flywheelDesiredSpeed = 50;
         break;
 
-        case 6:
+        case 8:
         SmartDashboard.putString("Function Test", "Function: Flywheel 75 + shoot");
         ballSystem.manualIntake = false;
         ballSystem.shoot = true;
         ballSystem.flywheelOn = true;
         ballSystem.flywheelDesiredSpeed = 75;
-        break;
-
-        case 7:
-        SmartDashboard.putString("Function Test", "Function: Flywheel 100 + shoot");
-        ballSystem.manualIntake = false;
-        ballSystem.shoot = true;
-        ballSystem.flywheelOn = true;
-        ballSystem.flywheelDesiredSpeed = 100;
-        break;
-
-        case 8:
-        SmartDashboard.putString("Function Test", "Function: Flywheel 0 + intake + shoot");
-        ballSystem.manualIntake = true;
-        ballSystem.shoot = true;
-        ballSystem.flywheelOn = true;
-        ballSystem.flywheelDesiredSpeed = 0;
         break;
 
         case 9:
@@ -124,6 +124,22 @@ public class BallSystemFunctionTest extends Command {
         break;
 
         case 10:
+        SmartDashboard.putString("Function Test", "Function: Flywheel 0 + intake + shoot");
+        ballSystem.manualIntake = true;
+        ballSystem.shoot = true;
+        ballSystem.flywheelOn = true;
+        ballSystem.flywheelDesiredSpeed = 0;
+        break;
+
+        case 11:
+        SmartDashboard.putString("Function Test", "Function: Flywheel 100 + shoot");
+        ballSystem.manualIntake = false;
+        ballSystem.shoot = true;
+        ballSystem.flywheelOn = true;
+        ballSystem.flywheelDesiredSpeed = 100;
+        break;
+
+        case 12:
         SmartDashboard.putString("Function Test", "Function: System Off");
         ballSystem.manualIntake = false;
         ballSystem.shoot = false;
@@ -145,6 +161,6 @@ public class BallSystemFunctionTest extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return functionsTested > 10;
+    return functionsTested > 12;
   }
 }
