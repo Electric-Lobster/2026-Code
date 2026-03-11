@@ -23,7 +23,7 @@ public class Drivetrain extends SubsystemBase {
   SparkMax bL = new SparkMax(BLDrive, MotorType.kBrushless);
   SparkMax bR = new SparkMax(BRDrive, MotorType.kBrushless);
 
-  public ChoreoDrive driveSystem = new ChoreoDrive("Cam", new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0)));
+  public ChoreoDrive driveSystem = new ChoreoDrive("FrameCam", new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0)));
 
   /** Creates a new Drivetrain. */
   public Drivetrain(Joystick lJoystick, Joystick rJoystick) {
