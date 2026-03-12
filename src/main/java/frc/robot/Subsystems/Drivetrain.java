@@ -52,17 +52,6 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     driveSystem.periodic();
-
-    Transform2d vectToGoal = ShooterConstants.REDGOAL.minus(getRobotPose());
-
-    double distx = vectToGoal.getX();
-    double disty = vectToGoal.getY();
-
-    double distance = Math.sqrt( (distx * distx) + (disty * disty));
-    //pythagoris hates me
-
-
-    SmartDashboard.putNumber("Data", distance);
     
     // This method will be called once per scheduler run
   }
