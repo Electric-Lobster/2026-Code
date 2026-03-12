@@ -4,17 +4,70 @@
 
 package frc.robot;
 
+import choreo.auto.AutoChooser;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Commands.DefaultBallSystem;
+import frc.robot.Commands.DefaultDrive;
+import frc.robot.Commands.Test.BallSystemFunctionTest;
+import frc.robot.Commands.Test.BallSystemTestBasic;
+import frc.robot.Subsystems.BallSystem;
+import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Utilities.GoalTracker;
 
 public class RobotContainer {
+  //TODO required Inputs: Intake, Reverse, Shoot, Flywheel, TargetGoal, Manual Flywheel Speed
+  //TODO Secure Camera
+  //TODO Secure Camera Wire
+  //TODO Attach RSL wire
+  //TODO trimm shooter top
+
+  Joystick lJoystick = new Joystick(0);
+  Joystick rJoystick = new Joystick(1);
+  XboxController controller = new XboxController(2);
+
+
+  Drivetrain m_Drivetrain = new Drivetrain();
+
+  BallSystem m_BallSystem = new BallSystem();
+
+
+  AutoChooser m_AutoChooser = new AutoChooser();
+  GoalTracker m_GoalTracker = new GoalTracker(m_Drivetrain);
+
+  AutoContainer m_AutoContainer = new AutoContainer(m_Drivetrain);
+
+  
   public RobotContainer() {
+
     configureBindings();
+
+    configureChooser();
   }
 
-  private void configureBindings() {}
+  private void configureBindings() {
+    m_Drivetrain.setDefaultCommand(new DefaultDrive(m_Drivetrain, m_GoalTracker, lJoystick, rJoystick));
+    m_BallSystem.setDefaultCommand(new DefaultBallSystem(m_BallSystem, m_GoalTracker, lJoystick, rJoystick, controller));
+  }
+
+  private void configureChooser() {
+    SmartDashboard.putData(m_AutoChooser);
+
+    m_AutoChooser.addRoutine("Test 1: Straight", m_AutoContainer::testRoutine);
+    m_AutoChooser.select("Test 1: Straight");
+  }
 
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    return m_AutoChooser.selectedCommand();
+  }
+
+  public Command getTestCommand() {
+    return Commands.sequence(
+      new BallSystemTestBasic(m_BallSystem, 7),
+      new BallSystemFunctionTest(m_BallSystem, 5)
+    );
   }
 }
