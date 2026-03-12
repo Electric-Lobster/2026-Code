@@ -7,17 +7,21 @@ package frc.robot.Commands;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Utilities.GoalTracker;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class DefaultDrive extends Command {
   Drivetrain drivetrain;
 
+  GoalTracker goalTracker;
+
   Joystick leftJoy;
   Joystick rightJoy;
 
   /** Creates a new DefaultDrive. */
-  public DefaultDrive(Drivetrain drivetrain, Joystick lJoy, Joystick rJoy) {
+  public DefaultDrive(Drivetrain drivetrain, GoalTracker goalTracker, Joystick lJoy, Joystick rJoy) {
     this.drivetrain = drivetrain;
+    this.goalTracker = goalTracker;
     this.leftJoy = lJoy;
     this.rightJoy = rJoy;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -33,7 +37,14 @@ public class DefaultDrive extends Command {
   @Override
   public void execute() {
 
-    drivetrain.tankDrive(leftJoy.getY(), rightJoy.getY());
+    double trackOffset = 0;
+    boolean trackTarget = false;
+
+    if (trackTarget) {
+      trackOffset = drivetrain.getTargetLocateVal(goalTracker.getGoalRelativeAngle());
+    }
+
+    drivetrain.tankDrive(leftJoy.getY() + trackOffset, rightJoy.getY() - trackOffset);
   }
 
   // Called once the command ends or is interrupted.
