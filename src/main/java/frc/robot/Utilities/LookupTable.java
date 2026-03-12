@@ -26,6 +26,9 @@ public class LookupTable {
         Map.Entry<Double, Double> lower = table.floorEntry(distance);
         Map.Entry<Double, Double> upper = table.ceilingEntry(distance);
 
+        if (lower == null) { lower = table.firstEntry(); }
+        if (upper == null) { upper = table.lastEntry(); }
+
         Double d1 = lower.getKey();
         Double v1 = lower.getValue();
         double d2 = upper.getKey();
