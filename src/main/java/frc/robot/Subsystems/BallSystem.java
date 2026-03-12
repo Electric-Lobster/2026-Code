@@ -18,11 +18,8 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Commands.DefaultBallSystem;
 
 public class BallSystem extends SubsystemBase {
 
@@ -50,7 +47,7 @@ public class BallSystem extends SubsystemBase {
   
 
   /** Creates a new Shooter. */
-  public BallSystem(Joystick leftJoy, Joystick rightJoy, XboxController controller) {
+  public BallSystem() {
 
     SparkMaxConfig intakeConfig = new SparkMaxConfig();
     SparkMaxConfig indexerConfig = new SparkMaxConfig();
@@ -71,9 +68,6 @@ public class BallSystem extends SubsystemBase {
     flywheel.getConfigurator().apply( new MotorOutputConfigs().withInverted(FLYWHEELINVERT).withNeutralMode(NeutralModeValue.Brake));
 
     flywheelPID.setTolerance(4);
-  
-    
-    setDefaultCommand(new DefaultBallSystem(this, leftJoy, rightJoy, controller));
   }
 
 
@@ -171,6 +165,7 @@ public class BallSystem extends SubsystemBase {
   private void updateFlywheel() {
 
     setFlywheelSpeed( (flywheelOn) ? flywheelDesiredSpeed : 0 );
+    SmartDashboard.putBoolean("Flywheel On", flywheelOn);
 
   }
 

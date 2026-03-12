@@ -8,15 +8,12 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import choreo.trajectory.DifferentialSample;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Commands.DefaultDrive;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.Utilities.ChoreoDrive;
 import static frc.robot.Constants.DriveTrainConstants.*;
 
@@ -27,18 +24,26 @@ public class Drivetrain extends SubsystemBase {
   SparkMax bL = new SparkMax(BLDrive, MotorType.kBrushless);
   SparkMax bR = new SparkMax(BRDrive, MotorType.kBrushless);
 
+  PIDController anglePID = new PIDController(0, 0, 0);
+  SimpleMotorFeedforward feedFoward = new SimpleMotorFeedforward(0, 0);
+
   public ChoreoDrive driveSystem = new ChoreoDrive("FrameCam", new Transform3d(0.3048, -0.3302, 0.6604, new Rotation3d(0, 0, 0)));
 
   /** Creates a new Drivetrain. */
-  public Drivetrain(Joystick lJoystick, Joystick rJoystick) {
+  public Drivetrain() {
 
     driveSystem.ConfigureMotors(fL, fR, bL, bR);
-
-    setDefaultCommand(new DefaultDrive(this, lJoystick, rJoystick));
   }
 
   public void tankDrive(double left, double right) {
     driveSystem.tankDrive(left, right);
+  }
+
+  public double getTargetLocateVal(double angle) {
+    double pidVal = anglePID.calculate(getRobotPose().getRotation().getDegrees(), angle);
+    double feedFowardVal = feedFoward.calculateWithVelocities(getRobotPose().getRotation().getDegrees(), angle);
+
+    return pidVal + feedFowardVal;
   }
 
   public void trajectoryFollow(DifferentialSample sample) {
@@ -52,17 +57,6 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     driveSystem.periodic();
-
-    Transform2d vectToGoal = ShooterConstants.REDGOAL.minus(getRobotPose());
-
-    double distx = vectToGoal.getX();
-    double disty = vectToGoal.getY();
-
-    double distance = Math.sqrt( (distx * distx) + (disty * disty));
-    //pythagoris hates me
-
-
-    SmartDashboard.putNumber("Data", distance);
     
     // This method will be called once per scheduler run
   }

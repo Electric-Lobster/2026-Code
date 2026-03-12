@@ -9,19 +9,23 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.BallSystem;
+import frc.robot.Utilities.GoalTracker;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class DefaultBallSystem extends Command {
 
   BallSystem ballSystem;
 
+  GoalTracker goalTracker;
+
   Joystick leftJoy;
   Joystick rightJoy;
   XboxController controller;
 
   /** Creates a new DefaultBallSystem. */
-  public DefaultBallSystem(BallSystem ballSystem, Joystick leftjoy, Joystick rightjoy, XboxController controller) {
+  public DefaultBallSystem(BallSystem ballSystem, GoalTracker goalTracker, Joystick leftjoy, Joystick rightjoy, XboxController controller) {
     this.ballSystem = ballSystem;
+    this.goalTracker = goalTracker;
     this.leftJoy = leftjoy;
     this.rightJoy = rightjoy;
     this.controller = controller;
@@ -45,11 +49,27 @@ public class DefaultBallSystem extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ballSystem.manualIntake = SmartDashboard.getBoolean("Intake", false);
-    ballSystem.shoot = SmartDashboard.getBoolean("Shoot", false);
-    ballSystem.reverseIndexer = SmartDashboard.getBoolean("Reverse", false);
-    ballSystem.flywheelOn = SmartDashboard.getBoolean("Flywheel", false);
-    ballSystem.flywheelDesiredSpeed = SmartDashboard.getNumber("Speed", 0);
+    //TODO INPUTS
+    boolean intake = SmartDashboard.getBoolean("Intake", false);
+    boolean shoot = SmartDashboard.getBoolean("Shoot", false);
+    boolean reverse = SmartDashboard.getBoolean("Reverse", false);
+    boolean flywheel = SmartDashboard.getBoolean("Flywheel", false);
+    boolean trackGoal = false;
+    double manualShooterSpeed = SmartDashboard.getNumber("Speed", 0);
+
+
+    ballSystem.manualIntake = intake;
+    ballSystem.shoot = shoot;
+    ballSystem.reverseIndexer = reverse;
+    if (flywheel) {
+      ballSystem.flywheelOn = !ballSystem.flywheelOn;
+    }
+    
+    if (trackGoal) {
+      ballSystem.flywheelDesiredSpeed = goalTracker.getFlywheelSpeed();
+    } else {
+      ballSystem.flywheelDesiredSpeed = manualShooterSpeed;
+    }
 
     ballSystem.update();
   }

@@ -7,6 +7,7 @@ package frc.robot;
 import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import frc.robot.Utilities.LookupTable;
 
 /** Add your docs here. */
@@ -49,6 +50,9 @@ public class Constants {
     public static class ShooterConstants {
 
         public static final Pose2d REDGOAL = new Pose2d(11.92, 4.033, new Rotation2d());
+        public static final Pose2d BLUEGOAL = new Pose2d(4.625, 4.033, new Rotation2d());
+
+        public static final Transform2d SHOOTEROFFSET = new Transform2d(-0.2, 0.2, new Rotation2d(0));
     
         private static final double[] TABLEDATA = {
             //Distance, Speed

@@ -21,10 +21,13 @@ public class LookupTable {
 
     }
 
-    public static double get(double distance) {
+    public double get(double distance) {
 
         Map.Entry<Double, Double> lower = table.floorEntry(distance);
         Map.Entry<Double, Double> upper = table.ceilingEntry(distance);
+
+        if (lower == null) { lower = table.firstEntry(); }
+        if (upper == null) { upper = table.lastEntry(); }
 
         Double d1 = lower.getKey();
         Double v1 = lower.getValue();
