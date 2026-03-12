@@ -45,7 +45,7 @@ public class RobotContainer {
 
   private void configureBindings() {
     m_Drivetrain.setDefaultCommand(new DefaultDrive(m_Drivetrain, lJoystick, rJoystick));
-    m_BallSystem.setDefaultCommand(new DefaultBallSystem(m_BallSystem, lJoystick, rJoystick, controller));
+    m_BallSystem.setDefaultCommand(new DefaultBallSystem(m_BallSystem, m_GoalTracker, lJoystick, rJoystick, controller));
   }
 
   private void configureChooser() {
