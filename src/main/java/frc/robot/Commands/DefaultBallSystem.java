@@ -4,8 +4,6 @@
 
 package frc.robot.Commands;
 
-import org.opencv.objdetect.GridBoard;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
