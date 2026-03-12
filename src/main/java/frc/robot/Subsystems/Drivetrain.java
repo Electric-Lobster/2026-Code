@@ -11,9 +11,7 @@ import choreo.trajectory.DifferentialSample;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Commands.DefaultDrive;
 import frc.robot.Utilities.ChoreoDrive;
 import static frc.robot.Constants.DriveTrainConstants.*;
 
@@ -27,11 +25,9 @@ public class Drivetrain extends SubsystemBase {
   public ChoreoDrive driveSystem = new ChoreoDrive("FrameCam", new Transform3d(0.3048, -0.3302, 0.6604, new Rotation3d(0, 0, 0)));
 
   /** Creates a new Drivetrain. */
-  public Drivetrain(Joystick lJoystick, Joystick rJoystick) {
+  public Drivetrain() {
 
     driveSystem.ConfigureMotors(fL, fR, bL, bR);
-
-    setDefaultCommand(new DefaultDrive(this, lJoystick, rJoystick));
   }
 
   public void tankDrive(double left, double right) {
