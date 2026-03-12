@@ -26,7 +26,7 @@ public class PhotonVisionProccesing {
 
     Transform3d kRobotToCam;
 
-    PhotonPoseEstimator poseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, kRobotToCam);
+    PhotonPoseEstimator poseEstimator;
 
 
     /**
@@ -36,6 +36,8 @@ public class PhotonVisionProccesing {
     public PhotonVisionProccesing(String camName, Transform3d camToCenter) {
         camera = new PhotonCamera(camName);
         kRobotToCam = camToCenter;
+
+        poseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, kRobotToCam);
     }
 
 
