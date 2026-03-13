@@ -19,7 +19,6 @@ import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Utilities.GoalTracker;
 
 public class RobotContainer {
-  //TODO required Inputs: Intake, Reverse, Shoot, Flywheel, TargetGoal, Manual Flywheel Speed
   //TODO Secure Camera
   //TODO Secure Camera Wire
   //TODO Attach RSL wire

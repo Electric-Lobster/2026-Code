@@ -38,8 +38,7 @@ public class DefaultDrive extends Command {
   public void execute() {
 
     double trackOffset = 0;
-    //TODO Inputs
-    boolean trackTarget = false;
+    boolean trackTarget = rightJoy.getRawButton(2);
 
     if (trackTarget) {
       trackOffset = drivetrain.getTargetLocateVal(goalTracker.getGoalRelativeAngle());

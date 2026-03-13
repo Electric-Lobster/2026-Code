@@ -49,13 +49,13 @@ public class DefaultBallSystem extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //TODO INPUTS
-    boolean intake = SmartDashboard.getBoolean("Intake", false);
-    boolean shoot = SmartDashboard.getBoolean("Shoot", false);
-    boolean reverse = SmartDashboard.getBoolean("Reverse", false);
-    boolean flywheel = SmartDashboard.getBoolean("Flywheel", false);
-    boolean trackGoal = false;
-    double manualShooterSpeed = SmartDashboard.getNumber("Speed", 0);
+    boolean intake = leftJoy.getRawButton(1);
+    boolean reverse = leftJoy.getRawButton(2);
+
+    boolean flywheel = rightJoy.getRawButtonPressed(3);
+    boolean trackGoal = rightJoy.getRawButton(2);
+    boolean shoot = rightJoy.getRawButton(1);
+    double manualShooterSpeed = ((-rightJoy.getRawAxis(3) + 1) / 2.0) * 100;
 
 
     ballSystem.manualIntake = intake;
