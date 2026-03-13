@@ -166,6 +166,7 @@ public class BallSystem extends SubsystemBase {
 
     setFlywheelSpeed( (flywheelOn) ? flywheelDesiredSpeed : 0 );
     SmartDashboard.putBoolean("Flywheel On", flywheelOn);
+    SmartDashboard.putBoolean("Flywheel Ready", flywheelAtSpeed());
 
   }
 
