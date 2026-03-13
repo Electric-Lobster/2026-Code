@@ -22,7 +22,6 @@ public class RobotContainer {
   //TODO Secure Camera
   //TODO Secure Camera Wire
   //TODO Attach RSL wire
-  //TODO trimm shooter top
 
   Joystick lJoystick = new Joystick(0);
   Joystick rJoystick = new Joystick(1);
