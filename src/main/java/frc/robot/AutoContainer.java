@@ -7,7 +7,6 @@ package frc.robot;
 import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Subsystems.BallSystem;
 import frc.robot.Subsystems.Drivetrain;
@@ -69,11 +68,12 @@ public class AutoContainer {
         return routine;
     }
 
-    public Command simpleShoot() {
+    public AutoRoutine simpleShoot() {
         AutoRoutine routine = autoFactory.newRoutine("Simple Shoot");
 
         AutoTrajectory startTraject = routine.trajectory("StartPathRight");
         AutoTrajectory fetchBalls = routine.trajectory("FetchBalls");
+        AutoTrajectory fetchBalls2 = routine.trajectory("fetchBalls2");
         AutoTrajectory backtoGoal = routine.trajectory("ReturnToGoal");
         AutoTrajectory aimAtGoal = routine.trajectory("AimAtGoal");
 
@@ -93,6 +93,13 @@ public class AutoContainer {
         );
 
         fetchBalls.active().onFalse(
+            Commands.sequence(
+                Commands.waitSeconds(1),
+                fetchBalls2.cmd()
+            )
+        );
+
+        fetchBalls2.active().onFalse(
             Commands.sequence(
                 Commands.waitSeconds(1),
                 backtoGoal.cmd()
@@ -116,7 +123,7 @@ public class AutoContainer {
             )
         );
 
-        return routine.cmd();
+        return routine;
     }
 
 }

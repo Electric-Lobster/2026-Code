@@ -7,7 +7,6 @@ package frc.robot;
 import choreo.auto.AutoChooser;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -33,8 +32,6 @@ public class RobotContainer {
 
   AutoChooser m_AutoChooser = new AutoChooser();
 
-  SendableChooser<Command> chooser = new SendableChooser<Command>();
-
   GoalTracker m_GoalTracker = new GoalTracker(m_Drivetrain);
 
   AutoContainer m_AutoContainer = new AutoContainer(m_Drivetrain, m_BallSystem, m_GoalTracker);
@@ -53,19 +50,14 @@ public class RobotContainer {
   }
 
   private void configureChooser() {
-    SmartDashboard.putData(chooser);
-
-    chooser.setDefaultOption("Simple Shoot", m_AutoContainer.simpleShoot());
-
-    chooser.addOption("Simple Shoot", m_AutoContainer.simpleShoot());
     
-
-    //m_AutoChooser.addRoutine("SimpleShoot", m_AutoContainer::simpleShoot);
-    //m_AutoChooser.select("SimpleShoot");
+    m_AutoChooser.addRoutine("SimpleShoot", m_AutoContainer::simpleShoot);
+    m_AutoChooser.select("SimpleShoot");
+    SmartDashboard.putData("AUTO", m_AutoChooser);
   }
 
   public Command getAutonomousCommand() {
-    return chooser.getSelected();
+    return m_AutoChooser.selectedCommand();
   }
 
   public Command getTestCommand() {
