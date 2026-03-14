@@ -49,8 +49,8 @@ public class ChoreoDrive {
         public int freeCurrent = 50;
         public int stallSpeed = 100;
 
-        public double posConversion = (1.0 / 10.71) * 0.1524 * Math.PI;
-        public double velConversion = ( (1.0 / 10.71) * 0.1524 * Math.PI) * (1.0/60.0);
+        public double posConversion = (1.0 / 8.45) * 0.1524 * Math.PI;
+        public double velConversion = ( (1.0 / 8.45) * 0.1524 * Math.PI) * (1.0/60.0);
 
         public boolean inverted = false;
 
@@ -265,7 +265,7 @@ public class ChoreoDrive {
 
 
     public void periodic() {
-        if (photon.foundTag()) {
+        if (photon.foundTag() && (Math.abs(fLdrive.get()) < 0.1) && (Math.abs(fRDrive.get()) <0.1)) {
             resetPose(photon.GetBestPose(initialPose));
         }
 

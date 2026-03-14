@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Subsystems.Drivetrain;
 
@@ -65,17 +66,19 @@ public class GoalTracker {
         double distance = Math.sqrt( (distx * distx) + (disty * disty));
         //pythagoris hates me
 
+        SmartDashboard.putNumber("Distance to Goal", distance);
+
         return distance;
     }
 
     public double getGoalRelativeAngle() {
 
-        Pose2d robotPose = drivetrain.getRobotPose().plus(ShooterConstants.SHOOTEROFFSET);
+        Pose2d robotPose = drivetrain.getRobotPose();
         Pose2d goal = getGoal();
 
         Transform2d vectToGoal = goal.minus(robotPose);
 
-        return vectToGoal.getTranslation().getAngle().getDegrees();
+        return vectToGoal.getTranslation().getAngle().getDegrees() ;
     }
 
     private double filteredSpeed = 0;

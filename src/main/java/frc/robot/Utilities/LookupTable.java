@@ -34,6 +34,8 @@ public class LookupTable {
         double d2 = upper.getKey();
         double v2 = upper.getValue();
 
+        
+
         return v1 + (distance - d1)*(v2 - v1)/(d2-d1);
 
     }

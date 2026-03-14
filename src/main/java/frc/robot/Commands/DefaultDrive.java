@@ -4,7 +4,9 @@
 
 package frc.robot.Commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Utilities.GoalTracker;
@@ -44,7 +46,15 @@ public class DefaultDrive extends Command {
       trackOffset = drivetrain.getTargetLocateVal(goalTracker.getGoalRelativeAngle());
     }
 
-    drivetrain.tankDrive(leftJoy.getY() + trackOffset, rightJoy.getY() - trackOffset);
+    double left = leftJoy.getY() * -1;
+    double right = rightJoy.getY() * -1;
+
+    left = left * Math.abs(left);
+    right = right * Math.abs(right);
+
+    SmartDashboard.putNumber("Track Angle", trackOffset);
+
+    drivetrain.tankDrive(left, right);
   }
 
   // Called once the command ends or is interrupted.

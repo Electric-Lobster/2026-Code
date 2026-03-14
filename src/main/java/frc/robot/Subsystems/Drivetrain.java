@@ -66,10 +66,10 @@ public class Drivetrain extends SubsystemBase {
     driveSystem.periodic();
 
     if (!SmartDashboard.containsKey("P")) { SmartDashboard.putNumber("P", 0); }
-    if (!SmartDashboard.containsKey("I")) { SmartDashboard.putNumber("P", 0); }
-    if (!SmartDashboard.containsKey("D")) { SmartDashboard.putNumber("P", 0); }
-    if (!SmartDashboard.containsKey("S")) { SmartDashboard.putNumber("P", 0); }
-    if (!SmartDashboard.containsKey("V")) { SmartDashboard.putNumber("P", 0); }
+    if (!SmartDashboard.containsKey("I")) { SmartDashboard.putNumber("I", 0); }
+    if (!SmartDashboard.containsKey("D")) { SmartDashboard.putNumber("D", 0); }
+    if (!SmartDashboard.containsKey("S")) { SmartDashboard.putNumber("S", 0); }
+    if (!SmartDashboard.containsKey("V")) { SmartDashboard.putNumber("V", 0); }
 
     anglePID.setP(SmartDashboard.getNumber("P", 0));
     anglePID.setI(SmartDashboard.getNumber("I", 0));
