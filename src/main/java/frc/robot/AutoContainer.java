@@ -7,6 +7,7 @@ package frc.robot;
 import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Subsystems.Drivetrain;
 
@@ -52,6 +53,20 @@ public class AutoContainer {
         );
 
         return routine;
+    }
+
+    public Command simpleShoot() {
+        AutoRoutine routine = autoFactory.newRoutine("Simple Shoot");
+
+        AutoTrajectory startTraject = routine.trajectory("StartPathRight");
+
+        routine.active().onTrue(
+            Commands.sequence(
+                startTraject.cmd()
+            )   
+        );
+
+        return routine.cmd();
     }
 
 }
