@@ -7,6 +7,8 @@ package frc.robot.Utilities;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.opencv.core.Mat;
+
 /** Add your docs here. */
 public class LookupTable {
 
@@ -34,7 +36,11 @@ public class LookupTable {
         double d2 = upper.getKey();
         double v2 = upper.getValue();
 
-        
+        double speed = v1 + (distance - d1)*(v2 - v1)/(d2-d1);
+
+        if (Double.isNaN(speed)) {
+            speed = table.firstEntry().getValue();
+        }
 
         return v1 + (distance - d1)*(v2 - v1)/(d2-d1);
 
