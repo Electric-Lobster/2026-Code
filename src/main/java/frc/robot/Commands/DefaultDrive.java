@@ -49,6 +49,11 @@ public class DefaultDrive extends Command {
     double left = leftJoy.getY() * -1;
     double right = rightJoy.getY() * -1;
 
+    if (trackTarget) {
+      left = rightJoy.getTwist() * 0.5;
+      right = -rightJoy.getTwist() * 0.5;
+    }
+
     left = left * Math.abs(left);
     right = right * Math.abs(right);
 
