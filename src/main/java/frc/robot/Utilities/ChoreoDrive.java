@@ -56,7 +56,7 @@ public class ChoreoDrive {
 
         public IdleMode idlemode = IdleMode.kBrake;
 
-        public double trackWidthMeters = 0.60325;
+        public double trackWidthMeters = 0.65405;
 
         public double[] velPID = {0.05, 0, 0};
     }
