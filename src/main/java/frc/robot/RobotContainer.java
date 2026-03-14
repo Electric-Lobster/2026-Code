@@ -37,7 +37,7 @@ public class RobotContainer {
 
   GoalTracker m_GoalTracker = new GoalTracker(m_Drivetrain);
 
-  AutoContainer m_AutoContainer = new AutoContainer(m_Drivetrain);
+  AutoContainer m_AutoContainer = new AutoContainer(m_Drivetrain, m_BallSystem, m_GoalTracker);
 
   
   public RobotContainer() {

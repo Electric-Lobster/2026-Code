@@ -19,6 +19,11 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class BallSystem extends SubsystemBase {
@@ -176,4 +181,35 @@ public class BallSystem extends SubsystemBase {
 
     filteredVelocity = (filteredVelocity * 0.95) + (flywheel.getVelocity().getValueAsDouble() * 0.05);
   }
+
+  public Command setIntake(boolean set) {
+    return new InstantCommand(() -> this.manualIntake = set, this);
+  }
+
+  public Command setShoot(boolean set) {
+    return new InstantCommand(() -> this.shoot = set, this);
+  }
+
+  public Command setFlywheel(boolean set) {
+    return new InstantCommand(() -> this.flywheelOn = set, this);
+  }
+
+  public Command setSpeed(double speed) {
+    return new InstantCommand(() -> this.flywheelDesiredSpeed = speed, this);
+  }
+
+  public Command updateCommand() {
+    return new RunCommand(() -> this.update(), this);
+  }
+
+  public Command resetBallSystem() {
+    return Commands.sequence(
+      new InstantCommand(() -> this.manualIntake = false, this),
+      new InstantCommand(() -> this.shoot = false, this),
+      new InstantCommand(() -> this.flywheelOn = false, this),
+      new InstantCommand(() -> this.flywheelDesiredSpeed = 0, this),
+      new InstantCommand(() -> this.update(), this)
+    );
+  }
+
 }

@@ -9,21 +9,27 @@ import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Subsystems.BallSystem;
 import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Utilities.GoalTracker;
 
 /** Add your docs here. */
 public class AutoContainer {
 
     //Subsystems
     Drivetrain drivetrain;
+    BallSystem ballSystem;
+    GoalTracker goalTracker;
 
     /**
      * https://choreo.autos/choreolib/auto-factory/
      */
     AutoFactory autoFactory;
 
-    public AutoContainer(Drivetrain m_DriveTrain) {
+    public AutoContainer(Drivetrain m_DriveTrain, BallSystem m_BallSystem, GoalTracker goalTracker) {
         this.drivetrain = m_DriveTrain;
+        this.ballSystem = m_BallSystem;
+        this.goalTracker = goalTracker;
 
         autoFactory = new AutoFactory(
             drivetrain.driveSystem::getPose,
@@ -31,6 +37,14 @@ public class AutoContainer {
             drivetrain.driveSystem::followTrajectory,
             true,
             drivetrain);
+        
+        autoFactory.bind("Intake On", ballSystem.setIntake(true));
+        autoFactory.bind("Intake Off", ballSystem.setIntake(false));
+        autoFactory.bind("Shoot On", ballSystem.setShoot(true));
+        autoFactory.bind("Shoot Off", ballSystem.setShoot(false));
+        autoFactory.bind("Flywheel On", ballSystem.setFlywheel(true));
+        autoFactory.bind("Flywheel Off", ballSystem.setFlywheel(false));
+        autoFactory.bind("Reset BallSystem", ballSystem.resetBallSystem());
     }
 
 
@@ -59,11 +73,47 @@ public class AutoContainer {
         AutoRoutine routine = autoFactory.newRoutine("Simple Shoot");
 
         AutoTrajectory startTraject = routine.trajectory("StartPathRight");
+        AutoTrajectory fetchBalls = routine.trajectory("FetchBalls");
+        AutoTrajectory backtoGoal = routine.trajectory("ReturnToGoal");
+        AutoTrajectory aimAtGoal = routine.trajectory("AimAtGoal");
 
         routine.active().onTrue(
+            startTraject.cmd()
+        );
+
+        startTraject.active().onFalse(
             Commands.sequence(
-                startTraject.cmd()
-            )   
+                ballSystem.setFlywheel(true),
+                ballSystem.setShoot(true),
+                ballSystem.setSpeed(goalTracker.getFlywheelSpeed()),
+                ballSystem.updateCommand().withTimeout(5),
+                ballSystem.resetBallSystem(),
+                fetchBalls.cmd()
+            )
+        );
+
+        fetchBalls.active().onFalse(
+            Commands.sequence(
+                Commands.waitSeconds(1),
+                backtoGoal.cmd()
+            )
+        );
+
+        backtoGoal.active().onFalse(
+            Commands.sequence(
+                Commands.waitSeconds(1),
+                aimAtGoal.cmd()
+            )
+        );
+
+        aimAtGoal.active().onFalse(
+            Commands.sequence(
+                ballSystem.setFlywheel(true),
+                ballSystem.setShoot(true),
+                ballSystem.setSpeed(goalTracker.getFlywheelSpeed()),
+                ballSystem.updateCommand().withTimeout(4),
+                ballSystem.resetBallSystem()
+            )
         );
 
         return routine.cmd();
