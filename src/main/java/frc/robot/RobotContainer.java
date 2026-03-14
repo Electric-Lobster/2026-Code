@@ -19,9 +19,6 @@ import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Utilities.GoalTracker;
 
 public class RobotContainer {
-  //TODO Secure Camera
-  //TODO Secure Camera Wire
-  //TODO Attach RSL wire
 
   Joystick lJoystick = new Joystick(0);
   Joystick rJoystick = new Joystick(1);

@@ -36,15 +36,7 @@ public class DefaultBallSystem extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-    //TODO remove this
-    if ( !SmartDashboard.containsKey("Shoot") ) { SmartDashboard.putBoolean("Shoot", false); }
-    if ( !SmartDashboard.containsKey("Reverse") ) { SmartDashboard.putBoolean("Reverse", false); }
-    if ( !SmartDashboard.containsKey("Flywheel") ) { SmartDashboard.putBoolean("Flywheel", false); }
-    if ( !SmartDashboard.containsKey("Intake") ) { SmartDashboard.putBoolean("Intake", false); }
-    if ( !SmartDashboard.containsKey("Speed") ) { SmartDashboard.putNumber("Speed", 0); }
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
