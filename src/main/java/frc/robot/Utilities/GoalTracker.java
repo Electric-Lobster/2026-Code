@@ -83,11 +83,15 @@ public class GoalTracker {
 
     private double filteredSpeed = 0;
     private double filterRate = 0.9;
-    public double getFlywheelSpeed() {
+    public double getFlywheelSpeed(boolean instant) {
         double speed = ShooterConstants.LOOKUPTABLE.get(getGoalDistance());
 
         filteredSpeed = (filteredSpeed * filterRate) + (speed * (1 - filterRate));
 
-        return filteredSpeed;
+        if (instant) {
+            return speed;
+        } else {
+            return filteredSpeed;
+        }
     }
 }

@@ -57,7 +57,7 @@ public class DefaultBallSystem extends Command {
     }
     
     if (trackGoal) {
-      ballSystem.flywheelDesiredSpeed = goalTracker.getFlywheelSpeed();
+      ballSystem.flywheelDesiredSpeed = goalTracker.getFlywheelSpeed(false);
     } else {
       ballSystem.flywheelDesiredSpeed = manualShooterSpeed;
     }

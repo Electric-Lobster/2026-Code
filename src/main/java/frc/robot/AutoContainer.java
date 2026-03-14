@@ -85,7 +85,7 @@ public class AutoContainer {
             Commands.sequence(
                 ballSystem.setFlywheel(true),
                 ballSystem.setShoot(true),
-                ballSystem.setSpeed(goalTracker.getFlywheelSpeed()),
+                ballSystem.setSpeed(goalTracker.getFlywheelSpeed(true)),
                 ballSystem.updateCommand().withTimeout(5),
                 ballSystem.resetBallSystem(),
                 fetchBalls.cmd()
@@ -110,7 +110,7 @@ public class AutoContainer {
             Commands.sequence(
                 ballSystem.setFlywheel(true),
                 ballSystem.setShoot(true),
-                ballSystem.setSpeed(goalTracker.getFlywheelSpeed()),
+                ballSystem.setSpeed(goalTracker.getFlywheelSpeed(true)),
                 ballSystem.updateCommand().withTimeout(4),
                 ballSystem.resetBallSystem()
             )

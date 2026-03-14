@@ -29,8 +29,8 @@ public class Constants {
         public static final int FLYWHEEL = 9;
 
         public static final int[] INTAKECURRANTLIMITS = {60, 40, 50}; // Stall current, free current, stall currant rpm
-        public static final int[] INDEXERCURRANTLIMITS = {60, 40, 50}; // Stall current, free current, stall currant rpm
-        public static final int[] ELEVATORCURRANTLIMITS = {20, 5, 50}; // Stall current, free current, stall currant rpm
+        public static final int[] INDEXERCURRANTLIMITS = {65, 40, 50}; // Stall current, free current, stall currant rpm
+        public static final int[] ELEVATORCURRANTLIMITS = {40, 10, 50}; // Stall current, free current, stall currant rpm
 
         public static final boolean INTAKEINVERT = true;
         public static final boolean INDEXERINVERT = false;
