@@ -46,7 +46,8 @@ public class AutoContainer {
         autoFactory.bind("Reset BallSystem", ballSystem.resetBallSystem());
     }
 
-
+    /*Depricated? Testing purpouses more likely;
+        nevertheless, make sure to add the choreo course before using*/
     public AutoRoutine testRoutine() {
         //Creates Routine
         AutoRoutine routine = autoFactory.newRoutine("Test");
@@ -71,6 +72,8 @@ public class AutoContainer {
     public AutoRoutine simpleShoot() {
         AutoRoutine routine = autoFactory.newRoutine("Simple Shoot");
 
+        /*split up so apriltag can be read at all times it ends and it can adjust and
+        be accurate, since the camera doesn't do well while moving*/
         AutoTrajectory startTraject = routine.trajectory("StartPathRight");
         AutoTrajectory fetchBalls = routine.trajectory("FetchBalls");
         AutoTrajectory fetchBalls2 = routine.trajectory("fetchBalls2");
@@ -84,7 +87,7 @@ public class AutoContainer {
         startTraject.active().onFalse(
             Commands.sequence(
                 ballSystem.setFlywheel(true),
-                ballSystem.setShoot(true),
+                ballSystem.setShoot(true),  
                 ballSystem.setSpeed(goalTracker.getFlywheelSpeed(true)),
                 ballSystem.updateCommand().withTimeout(5),
                 ballSystem.resetBallSystem(),
@@ -92,28 +95,28 @@ public class AutoContainer {
             )
         );
 
-        fetchBalls.active().onFalse(
+        fetchBalls.recentlyDone().onFalse(
             Commands.sequence(
                 Commands.waitSeconds(1),
                 fetchBalls2.cmd()
             )
         );
 
-        fetchBalls2.active().onFalse(
+        fetchBalls2.recentlyDone().onFalse(
             Commands.sequence(
                 Commands.waitSeconds(1),
                 backtoGoal.cmd()
             )
         );
 
-        backtoGoal.active().onFalse(
+        backtoGoal.recentlyDone().onFalse(
             Commands.sequence(
                 Commands.waitSeconds(1),
                 aimAtGoal.cmd()
             )
         );
 
-        aimAtGoal.active().onFalse(
+        aimAtGoal.recentlyDone().onFalse(
             Commands.sequence(
                 ballSystem.setFlywheel(true),
                 ballSystem.setShoot(true),
