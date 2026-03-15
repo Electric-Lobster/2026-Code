@@ -128,5 +128,7 @@
   "splits":[0]
  },
  "events":[
-   {"name":"IntakeOn", "from":{"target":1, "targetTimestamp":3.27301, "offset":{"exp":"-1.5 s", "val":-1.5}}, "event":null}]
+   {"name":"IntakeOn", "from":{"target":1, "targetTimestamp":3.27301, "offset":{"exp":"-1.5 s", "val":-1.5}}, "event":null},
+   {"name":"Marker", "from":{"target":0, "targetTimestamp":0.0, "offset":{"exp":"0 s", "val":0.0}}, "event":null},
+   {"name":"Marker", "from":{"target":0, "targetTimestamp":0.0, "offset":{"exp":"0 s", "val":0.0}}, "event":null}]
 }

@@ -50,7 +50,7 @@ public class ChoreoDrive {
         public int stallSpeed = 100;
 
         public double posConversion = (1.0 / 8.45) * 0.1524 * Math.PI;
-        public double velConversion = ( (1.0 / 8.45) * 0.1524 * Math.PI) * (1.0/60.0);
+        public double velConversion = (1.0 / 8.45) * (1/60.0);
 
         public boolean inverted = false;
 
