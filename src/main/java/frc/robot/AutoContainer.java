@@ -84,7 +84,7 @@ public class AutoContainer {
             startTraject.cmd()
         );
 
-        startTraject.active().onFalse(
+        startTraject.done().onTrue(
             Commands.sequence(
                 ballSystem.setFlywheel(true),
                 ballSystem.setShoot(true),  
@@ -95,28 +95,31 @@ public class AutoContainer {
             )
         );
 
-        fetchBalls.recentlyDone().onFalse(
-            Commands.sequence(
-                Commands.waitSeconds(1),
-                fetchBalls2.cmd()
-            )
+        fetchBalls.done().onTrue(
+            fetchBalls2.cmd()
+            //Commands.sequence(
+                //Commands.waitSeconds(1),
+                //fetchBalls2.cmd()
+            //)
         );
 
-        fetchBalls2.recentlyDone().onFalse(
-            Commands.sequence(
-                Commands.waitSeconds(1),
-                backtoGoal.cmd()
-            )
+        fetchBalls2.done().onTrue(
+            backtoGoal.cmd()
+            //Commands.sequence(
+            //    //Commands.waitSeconds(1),
+            //    backtoGoal.cmd()
+            //)
         );
 
-        backtoGoal.recentlyDone().onFalse(
-            Commands.sequence(
-                Commands.waitSeconds(1),
-                aimAtGoal.cmd()
-            )
+        backtoGoal.done().onTrue(
+            aimAtGoal.cmd()
+            //Commands.sequence(
+                //Commands.waitSeconds(1),
+            //    aimAtGoal.cmd()
+            //)
         );
 
-        aimAtGoal.recentlyDone().onFalse(
+        aimAtGoal.done().onTrue(
             Commands.sequence(
                 ballSystem.setFlywheel(true),
                 ballSystem.setShoot(true),
