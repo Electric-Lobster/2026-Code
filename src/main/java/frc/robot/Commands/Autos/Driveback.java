@@ -45,9 +45,11 @@ public class Driveback extends Command {
   public void execute() {
     if (timer.advanceIfElapsed(1.5)) { state ++; }
 
+    ballSystem.update();
+
     switch (state) {
       case 0:
-        drivetrain.tankDrive(-0.25, -0.25);
+        drivetrain.tankDrive(-0.2, -0.2);
         break;
     
       case 1:
@@ -57,14 +59,14 @@ public class Driveback extends Command {
       case 2:
         ballSystem.flywheelOn = true;
         ballSystem.shoot = true;
-        ballSystem.flywheelDesiredSpeed = goalTracker.getFlywheelSpeed(true);
+        ballSystem.flywheelDesiredSpeed = goalTracker.getFlywheelSpeed(false);
         break;
 
       case 3:
         ballSystem.flywheelOn = false;
         ballSystem.shoot = false;
 
-        drivetrain.tankDrive(0.25, -0.25);
+        drivetrain.tankDrive(0.15, -0.15);
         break;
 
       case 4:
@@ -72,12 +74,12 @@ public class Driveback extends Command {
         break;
 
       case 5:
-        drivetrain.tankDrive(0.5, 0.5);
+        drivetrain.tankDrive(0.25, 0.25);
         ballSystem.manualIntake = true;
         break;
       
       case 6:
-        drivetrain.tankDrive(-0.5, 0.5);
+        drivetrain.tankDrive(-0.25, 0.25);
         ballSystem.manualIntake = false;
         break;
       
