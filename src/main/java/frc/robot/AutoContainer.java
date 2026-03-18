@@ -46,7 +46,8 @@ public class AutoContainer {
         autoFactory.bind("Reset BallSystem", ballSystem.resetBallSystem());
     }
 
-
+    /*Depricated? Testing purpouses more likely;
+        nevertheless, make sure to add the choreo course before using*/
     public AutoRoutine testRoutine() {
         //Creates Routine
         AutoRoutine routine = autoFactory.newRoutine("Test");
@@ -71,6 +72,8 @@ public class AutoContainer {
     public AutoRoutine simpleShoot() {
         AutoRoutine routine = autoFactory.newRoutine("Simple Shoot");
 
+        /*split up so apriltag can be read at all times it ends and it can adjust and
+        be accurate, since the camera doesn't do well while moving*/
         AutoTrajectory startTraject = routine.trajectory("StartPathRight");
         AutoTrajectory fetchBalls = routine.trajectory("FetchBalls");
         AutoTrajectory fetchBalls2 = routine.trajectory("fetchBalls2");
@@ -81,10 +84,10 @@ public class AutoContainer {
             startTraject.cmd()
         );
 
-        startTraject.active().onFalse(
+        startTraject.done().onTrue(
             Commands.sequence(
                 ballSystem.setFlywheel(true),
-                ballSystem.setShoot(true),
+                ballSystem.setShoot(true),  
                 ballSystem.setSpeed(goalTracker.getFlywheelSpeed(true)),
                 ballSystem.updateCommand().withTimeout(5),
                 ballSystem.resetBallSystem(),
@@ -92,28 +95,31 @@ public class AutoContainer {
             )
         );
 
-        fetchBalls.active().onFalse(
-            Commands.sequence(
-                Commands.waitSeconds(1),
-                fetchBalls2.cmd()
-            )
+        fetchBalls.done().onTrue(
+            fetchBalls2.cmd()
+            //Commands.sequence(
+                //Commands.waitSeconds(1),
+                //fetchBalls2.cmd()
+            //)
         );
 
-        fetchBalls2.active().onFalse(
-            Commands.sequence(
-                Commands.waitSeconds(1),
-                backtoGoal.cmd()
-            )
+        fetchBalls2.done().onTrue(
+            backtoGoal.cmd()
+            //Commands.sequence(
+            //    //Commands.waitSeconds(1),
+            //    backtoGoal.cmd()
+            //)
         );
 
-        backtoGoal.active().onFalse(
-            Commands.sequence(
-                Commands.waitSeconds(1),
-                aimAtGoal.cmd()
-            )
+        backtoGoal.done().onTrue(
+            aimAtGoal.cmd()
+            //Commands.sequence(
+                //Commands.waitSeconds(1),
+            //    aimAtGoal.cmd()
+            //)
         );
 
-        aimAtGoal.active().onFalse(
+        aimAtGoal.done().onTrue(
             Commands.sequence(
                 ballSystem.setFlywheel(true),
                 ballSystem.setShoot(true),
