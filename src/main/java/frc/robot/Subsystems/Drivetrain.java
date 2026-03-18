@@ -28,7 +28,7 @@ public class Drivetrain extends SubsystemBase {
   PIDController anglePID = new PIDController(0, 0, 0);
   SimpleMotorFeedforward feedFoward = new SimpleMotorFeedforward(0, 0);
 
-  public ChoreoDrive driveSystem = new ChoreoDrive("FrameCam", new Transform3d(0.3048, -0.3302, 0.6604, new Rotation3d(0, 0, 0)));
+  public ChoreoDrive driveSystem = new ChoreoDrive("FrameCam", new Transform3d(0.3048, -0.3302, 0.6604, new Rotation3d(0, 20, 0)));
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
