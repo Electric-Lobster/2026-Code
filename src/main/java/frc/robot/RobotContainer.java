@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Commands.DefaultBallSystem;
 import frc.robot.Commands.DefaultDrive;
+import frc.robot.Commands.Autos.Driveback;
 import frc.robot.Commands.Test.BallSystemFunctionTest;
 import frc.robot.Commands.Test.BallSystemTestBasic;
 import frc.robot.Subsystems.BallSystem;
@@ -19,11 +20,6 @@ import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Utilities.GoalTracker;
 
 public class RobotContainer {
-  //TODO required Inputs: Intake, Reverse, Shoot, Flywheel, TargetGoal, Manual Flywheel Speed
-  //TODO Secure Camera
-  //TODO Secure Camera Wire
-  //TODO Attach RSL wire
-  //TODO trimm shooter top
 
   Joystick lJoystick = new Joystick(0);
   Joystick rJoystick = new Joystick(1);
@@ -36,9 +32,10 @@ public class RobotContainer {
 
 
   AutoChooser m_AutoChooser = new AutoChooser();
+
   GoalTracker m_GoalTracker = new GoalTracker(m_Drivetrain);
 
-  AutoContainer m_AutoContainer = new AutoContainer(m_Drivetrain);
+  AutoContainer m_AutoContainer = new AutoContainer(m_Drivetrain, m_BallSystem, m_GoalTracker);
 
   
   public RobotContainer() {
@@ -54,14 +51,15 @@ public class RobotContainer {
   }
 
   private void configureChooser() {
-    SmartDashboard.putData(m_AutoChooser);
-
-    m_AutoChooser.addRoutine("Test 1: Straight", m_AutoContainer::testRoutine);
-    m_AutoChooser.select("Test 1: Straight");
+    
+    m_AutoChooser.addRoutine("SimpleShoot", m_AutoContainer::simpleShoot);
+    m_AutoChooser.select("SimpleShoot");
+    SmartDashboard.putData("AUTO", m_AutoChooser);
   }
 
   public Command getAutonomousCommand() {
-    return m_AutoChooser.selectedCommand();
+    //return m_AutoChooser.selectedCommand();
+    return new Driveback(m_Drivetrain, m_BallSystem, m_GoalTracker);
   }
 
   public Command getTestCommand() {

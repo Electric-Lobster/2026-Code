@@ -49,14 +49,16 @@ public class ChoreoDrive {
         public int freeCurrent = 50;
         public int stallSpeed = 100;
 
-        public double posConversion = (1.0 / 10.71) * 0.1524 * Math.PI;
-        public double velConversion = ( (1.0 / 10.71) * 0.1524 * Math.PI) * (1.0/60.0);
+        //gear ratio? * diameter? * pi => circumference => distance wheels moved
+        public double posConversion = (1.0 / 8.45) * 0.1524 * Math.PI;
+        //60 * gear ratio
+        public double velConversion = (1.0 / 8.45) * (1/60.0);
 
         public boolean inverted = false;
 
         public IdleMode idlemode = IdleMode.kBrake;
 
-        public double trackWidthMeters = 0.60325;
+        public double trackWidthMeters = 0.65405;
 
         public double[] velPID = {0.05, 0, 0};
     }
@@ -265,7 +267,7 @@ public class ChoreoDrive {
 
 
     public void periodic() {
-        if (photon.foundTag()) {
+        if (photon.foundTag() && (Math.abs(fLdrive.get()) < 0.1) && (Math.abs(fRDrive.get()) <0.1)) {
             resetPose(photon.GetBestPose(initialPose));
         }
 
