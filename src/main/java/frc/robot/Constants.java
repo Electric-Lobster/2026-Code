@@ -30,14 +30,12 @@ public class Constants {
 
         public static final int[] INTAKECURRANTLIMITS = {60, 40, 50}; // Stall current, free current, stall currant rpm
         public static final int[] INDEXERCURRANTLIMITS = {65, 40, 50}; // Stall current, free current, stall currant rpm
-        public static final int[] ELEVATORCURRANTLIMITS = {40, 10, 50}; // Stall current, free current, stall currant rpm
+        public static final int[] ELEVATORCURRANTLIMITS = {60, 40, 100}; // Stall current, free current, stall currant rpm
 
         public static final boolean INTAKEINVERT = true;
         public static final boolean INDEXERINVERT = false;
         public static final boolean ELEVATORINVERT = true;
         public static final InvertedValue FLYWHEELINVERT = InvertedValue.Clockwise_Positive;
-
-
 
         public static final double INTAKESPEED = 1;
         public static final double INTAKEREVERSESPEED = -0.5;
