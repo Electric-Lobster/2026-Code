@@ -7,6 +7,7 @@ package frc.robot;
 import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
+import choreo.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Subsystems.BallSystem;
 import frc.robot.Subsystems.Drivetrain;
@@ -132,4 +133,18 @@ public class AutoContainer {
         return routine;
     }
 
+    public AutoRoutine disrupt() {
+        AutoRoutine routine = autoFactory.newRoutine("disrupt");
+
+        AutoTrajectory disrupt = routine.trajectory("Disrupt");
+
+        routine.active().onTrue(
+            Commands.sequence(
+                disrupt.resetOdometry(),
+                disrupt.cmd()
+            )
+        );
+
+        return routine;
+    }
 }

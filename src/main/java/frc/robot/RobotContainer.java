@@ -53,13 +53,14 @@ public class RobotContainer {
   private void configureChooser() {
     
     m_AutoChooser.addRoutine("SimpleShoot", m_AutoContainer::simpleShoot);
-    m_AutoChooser.select("SimpleShoot");
+    m_AutoChooser.addRoutine("Disrupt", m_AutoContainer::disrupt);
+    m_AutoChooser.select("Disrupt");
     SmartDashboard.putData("AUTO", m_AutoChooser);
   }
 
   public Command getAutonomousCommand() {
-    //return m_AutoChooser.selectedCommand();
-    return new Driveback(m_Drivetrain, m_BallSystem, m_GoalTracker);
+    return m_AutoChooser.selectedCommand();
+    //return new Driveback(m_Drivetrain, m_BallSystem, m_GoalTracker);
   }
 
   public Command getTestCommand() {
