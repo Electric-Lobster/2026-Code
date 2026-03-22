@@ -53,7 +53,8 @@ public class RobotContainer {
   private void configureChooser() {
     
     m_AutoChooser.addRoutine("SimpleShoot", m_AutoContainer::simpleShoot);
-    m_AutoChooser.select("SimpleShoot");
+    m_AutoChooser.addRoutine("Disrupt", m_AutoContainer::disrupt);
+    m_AutoChooser.select("Disrupt");
     SmartDashboard.putData("AUTO", m_AutoChooser);
   }
 
