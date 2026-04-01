@@ -6,7 +6,6 @@ package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.BallSystem;
 import frc.robot.Utilities.GoalTracker;
@@ -36,26 +35,18 @@ public class DefaultBallSystem extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-    //TODO remove this
-    if ( !SmartDashboard.containsKey("Shoot") ) { SmartDashboard.putBoolean("Shoot", false); }
-    if ( !SmartDashboard.containsKey("Reverse") ) { SmartDashboard.putBoolean("Reverse", false); }
-    if ( !SmartDashboard.containsKey("Flywheel") ) { SmartDashboard.putBoolean("Flywheel", false); }
-    if ( !SmartDashboard.containsKey("Intake") ) { SmartDashboard.putBoolean("Intake", false); }
-    if ( !SmartDashboard.containsKey("Speed") ) { SmartDashboard.putNumber("Speed", 0); }
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //TODO INPUTS
-    boolean intake = SmartDashboard.getBoolean("Intake", false);
-    boolean shoot = SmartDashboard.getBoolean("Shoot", false);
-    boolean reverse = SmartDashboard.getBoolean("Reverse", false);
-    boolean flywheel = SmartDashboard.getBoolean("Flywheel", false);
-    boolean trackGoal = false;
-    double manualShooterSpeed = SmartDashboard.getNumber("Speed", 0);
+    boolean intake = leftJoy.getRawButton(1);
+    boolean reverse = leftJoy.getRawButton(2);
+
+    boolean flywheel = rightJoy.getRawButtonPressed(3);
+    boolean trackGoal = rightJoy.getRawButton(2);
+    boolean shoot = rightJoy.getRawButton(1);
+    double manualShooterSpeed = ((-rightJoy.getRawAxis(3) + 1) / 2.0) * 100;
 
 
     ballSystem.manualIntake = intake;
@@ -66,7 +57,7 @@ public class DefaultBallSystem extends Command {
     }
     
     if (trackGoal) {
-      ballSystem.flywheelDesiredSpeed = goalTracker.getFlywheelSpeed();
+      ballSystem.flywheelDesiredSpeed = goalTracker.getFlywheelSpeed(false);
     } else {
       ballSystem.flywheelDesiredSpeed = manualShooterSpeed;
     }

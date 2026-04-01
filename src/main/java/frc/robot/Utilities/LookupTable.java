@@ -6,6 +6,7 @@ package frc.robot.Utilities;
 
 import java.util.Map;
 import java.util.TreeMap;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /** Add your docs here. */
 public class LookupTable {
@@ -34,7 +35,16 @@ public class LookupTable {
         double d2 = upper.getKey();
         double v2 = upper.getValue();
 
-        return v1 + (distance - d1)*(v2 - v1)/(d2-d1);
+        double speed = v1 + (distance - d1)*(v2 - v1)/(d2-d1);
+
+        if (Double.isNaN(speed)) {
+            speed = 50;
+            SmartDashboard.putBoolean("Invalid Speed", true);
+        } else {
+            SmartDashboard.putBoolean("Invalid Speed", false);
+        }
+
+        return speed;
 
     }
 
