@@ -8,6 +8,7 @@ import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Commands.Autos.AutoShoot;
 import frc.robot.Subsystems.BallSystem;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Utilities.GoalTracker;
@@ -80,9 +81,12 @@ public class AutoContainer {
         AutoTrajectory aim = routine.trajectory("EndRight");
 
         routine.active().onTrue(
-            Commands.parallel(
-                start.cmd(),
-                ballSystem.updateCommand()
+            Commands.sequence(
+                new AutoShoot(drivetrain, ballSystem, goalTracker),
+                Commands.parallel(
+                    start.cmd(),
+                    ballSystem.updateCommand()
+                )
             )
         );
 
@@ -119,9 +123,12 @@ public class AutoContainer {
         AutoTrajectory aim = routine.trajectory("EndRight");
 
         routine.active().onTrue(
-            Commands.parallel(
-                start.cmd(),
-                ballSystem.updateCommand()
+            Commands.sequence(
+                new AutoShoot(drivetrain, ballSystem, goalTracker),
+                Commands.parallel(
+                    start.cmd(),
+                    ballSystem.updateCommand()
+                )
             )
         );
 
@@ -157,9 +164,12 @@ public class AutoContainer {
         AutoTrajectory aim = routine.trajectory("EndLeft");
 
         routine.active().onTrue(
-            Commands.parallel(
-                start.cmd(),
-                ballSystem.updateCommand()
+            Commands.sequence(
+                new AutoShoot(drivetrain, ballSystem, goalTracker),
+                Commands.parallel(
+                    start.cmd(),
+                    ballSystem.updateCommand()
+                )
             )
         );
 
@@ -195,9 +205,12 @@ public class AutoContainer {
         AutoTrajectory aim = routine.trajectory("EndLeft");
 
         routine.active().onTrue(
-            Commands.parallel(
-                start.cmd(),
-                ballSystem.updateCommand()
+            Commands.sequence(
+                new AutoShoot(drivetrain, ballSystem, goalTracker),
+                Commands.parallel(
+                    start.cmd(),
+                    ballSystem.updateCommand()
+                )
             )
         );
 
