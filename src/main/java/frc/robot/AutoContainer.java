@@ -80,7 +80,10 @@ public class AutoContainer {
         AutoTrajectory aim = routine.trajectory("EndRight");
 
         routine.active().onTrue(
-            start.cmd()
+            Commands.parallel(
+                start.cmd(),
+                ballSystem.updateCommand()
+            )
         );
 
         start.done().onTrue(
@@ -113,7 +116,10 @@ public class AutoContainer {
         AutoTrajectory aim = routine.trajectory("EndRight");
 
         routine.active().onTrue(
-            start.cmd()
+            Commands.parallel(
+                start.cmd(),
+                ballSystem.updateCommand()
+            )
         );
 
         start.done().onTrue(
@@ -145,7 +151,10 @@ public class AutoContainer {
         AutoTrajectory aim = routine.trajectory("EndLeft");
 
         routine.active().onTrue(
-            start.cmd()
+            Commands.parallel(
+                start.cmd(),
+                ballSystem.updateCommand()
+            )
         );
 
         start.done().onTrue(
@@ -177,7 +186,10 @@ public class AutoContainer {
         AutoTrajectory aim = routine.trajectory("EndLeft");
 
         routine.active().onTrue(
-            start.cmd()
+            Commands.parallel(
+                start.cmd(),
+                ballSystem.updateCommand()
+            )
         );
 
         start.done().onTrue(
