@@ -99,7 +99,10 @@ public class AutoContainer {
         );
 
         bumpEnd.done().onTrue(
-            aim.cmd()
+            Commands.parallel(
+                aim.cmd(),
+                ballSystem.targetSpeed(goalTracker)
+            )
         );
 
         return routine;
@@ -135,7 +138,10 @@ public class AutoContainer {
         );
 
         bumpEnd.done().onTrue(
-            aim.cmd()
+            Commands.parallel(
+                aim.cmd(),
+                ballSystem.targetSpeed(goalTracker)
+            )
         );
 
         return routine;
@@ -170,7 +176,10 @@ public class AutoContainer {
         );
 
         bumpEnd.done().onTrue(
-            aim.cmd()
+            Commands.parallel(
+                aim.cmd(),
+                ballSystem.targetSpeed(goalTracker)
+            )
         );
 
         return routine;
@@ -205,7 +214,10 @@ public class AutoContainer {
         );
 
         bumpEnd.done().onTrue(
-            aim.cmd()
+            Commands.parallel(
+                aim.cmd(),
+                ballSystem.targetSpeed(goalTracker)
+            )
         );
 
         return routine;
