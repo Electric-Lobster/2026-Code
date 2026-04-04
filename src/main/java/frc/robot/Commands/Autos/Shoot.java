@@ -37,6 +37,8 @@ public class Shoot extends Command {
   @Override
   public void execute() {
 
+    ballSystem.update();
+
     if (timer.advanceIfElapsed(1)) {
       state += 1;
     }
@@ -62,6 +64,7 @@ public class Shoot extends Command {
   public void end(boolean interrupted) {
     ballSystem.shoot = false;
     ballSystem.flywheelOn = false;
+    ballSystem.update();
   }
 
   // Returns true when the command should end.
