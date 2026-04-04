@@ -39,7 +39,7 @@ public class Shoot extends Command {
 
     ballSystem.update();
 
-    if (timer.advanceIfElapsed(1)) {
+    if ((timer.advanceIfElapsed(1) && state == 0) || (timer.advanceIfElapsed(4) && state == 1) ) {
       state += 1;
     }
 

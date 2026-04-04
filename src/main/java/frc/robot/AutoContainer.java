@@ -208,7 +208,6 @@ public class AutoContainer {
         routine.active().onTrue(
             Commands.sequence(
                 new AutoShoot(drivetrain, ballSystem, goalTracker),
-                Commands.waitSeconds(1),
                 Commands.parallel(
                     start.cmd(),
                     ballSystem.updateCommand()
