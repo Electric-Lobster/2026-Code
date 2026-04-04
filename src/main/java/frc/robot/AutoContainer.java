@@ -7,6 +7,7 @@ package frc.robot;
 import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Commands.Autos.AutoShoot;
 import frc.robot.Subsystems.BallSystem;
@@ -88,7 +89,7 @@ public class AutoContainer {
                     ballSystem.updateCommand()
                 )
             )
-        );
+        ) ;
 
         start.done().onTrue(
             bumpStart.cmd()
@@ -207,6 +208,7 @@ public class AutoContainer {
         routine.active().onTrue(
             Commands.sequence(
                 new AutoShoot(drivetrain, ballSystem, goalTracker),
+                Commands.waitSeconds(1),
                 Commands.parallel(
                     start.cmd(),
                     ballSystem.updateCommand()
@@ -230,85 +232,6 @@ public class AutoContainer {
             Commands.parallel(
                 aim.cmd(),
                 ballSystem.targetSpeed(goalTracker)
-            )
-        );
-
-        return routine;
-    }
-
-
-    public AutoRoutine simpleShoot() {
-        AutoRoutine routine = autoFactory.newRoutine("Simple Shoot");
-
-        /*split up so apriltag can be read at all times it ends and it can adjust and
-        be accurate, since the camera doesn't do well while moving*/
-        AutoTrajectory startTraject = routine.trajectory("StartPathRight");
-        AutoTrajectory fetchBalls = routine.trajectory("FetchBalls");
-        AutoTrajectory fetchBalls2 = routine.trajectory("fetchBalls2");
-        AutoTrajectory backtoGoal = routine.trajectory("ReturnToGoal");
-        AutoTrajectory aimAtGoal = routine.trajectory("AimAtGoal");
-
-        routine.active().onTrue(
-            startTraject.cmd()
-        );
-
-        startTraject.done().onTrue(
-            Commands.sequence(
-                ballSystem.setFlywheel(true),
-                ballSystem.setShoot(true),  
-                ballSystem.setSpeed(goalTracker.getFlywheelSpeed(true)),
-                ballSystem.updateCommand().withTimeout(5),
-                ballSystem.resetBallSystem(),
-                fetchBalls.cmd()
-            )
-        );
-
-        fetchBalls.done().onTrue(
-            fetchBalls2.cmd()
-            //Commands.sequence(
-                //Commands.waitSeconds(1),
-                //fetchBalls2.cmd()
-            //)
-        );
-
-        fetchBalls2.done().onTrue(
-            backtoGoal.cmd()
-            //Commands.sequence(
-            //    //Commands.waitSeconds(1),
-            //    backtoGoal.cmd()
-            //)
-        );
-
-        backtoGoal.done().onTrue(
-            aimAtGoal.cmd()
-            //Commands.sequence(
-                //Commands.waitSeconds(1),
-            //    aimAtGoal.cmd()
-            //)
-        );
-
-        aimAtGoal.done().onTrue(
-            Commands.sequence(
-                ballSystem.setFlywheel(true),
-                ballSystem.setShoot(true),
-                ballSystem.setSpeed(goalTracker.getFlywheelSpeed(true)),
-                ballSystem.updateCommand().withTimeout(4),
-                ballSystem.resetBallSystem()
-            )
-        );
-
-        return routine;
-    }
-
-    public AutoRoutine disrupt() {
-        AutoRoutine routine = autoFactory.newRoutine("disrupt");
-
-        AutoTrajectory disrupt = routine.trajectory("Disrupt");
-
-        routine.active().onTrue(
-            Commands.sequence(
-                disrupt.resetOdometry(),
-                disrupt.cmd()
             )
         );
 

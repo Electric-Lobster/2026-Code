@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Commands.DefaultBallSystem;
 import frc.robot.Commands.DefaultDrive;
+import frc.robot.Commands.Autos.AutoShoot;
 import frc.robot.Commands.Test.BallSystemFunctionTest;
 import frc.robot.Commands.Test.BallSystemTestBasic;
 import frc.robot.Subsystems.BallSystem;
@@ -51,10 +52,10 @@ public class RobotContainer {
 
   private void configureChooser() {
     
-    m_AutoChooser.addRoutine("StartLeft", m_AutoContainer::simpleShoot);
-    m_AutoChooser.addRoutine("StartMiddleLeft", m_AutoContainer::simpleShoot);
-    m_AutoChooser.addRoutine("StartMiddleRight", m_AutoContainer::simpleShoot);
-    m_AutoChooser.addRoutine("StartRight", m_AutoContainer::simpleShoot);
+    m_AutoChooser.addRoutine("StartLeft", m_AutoContainer::startLeft);
+    m_AutoChooser.addRoutine("StartMiddleLeft", m_AutoContainer::startMiddleLeft);
+    m_AutoChooser.addRoutine("StartMiddleRight", m_AutoContainer::startMiddleRight);
+    m_AutoChooser.addRoutine("StartRight", m_AutoContainer::startRight);
 
     m_AutoChooser.select("StartLeft");
 
@@ -63,6 +64,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return m_AutoChooser.selectedCommand();
+    //return new AutoShoot(m_Drivetrain, m_BallSystem, m_GoalTracker);
   }
 
   public Command getTestCommand() {
