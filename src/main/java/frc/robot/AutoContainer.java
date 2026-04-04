@@ -208,28 +208,28 @@ public class AutoContainer {
         routine.active().onTrue(
             Commands.sequence(
                 new AutoShoot(drivetrain, ballSystem, goalTracker),
-                Commands.parallel(
-                    start.cmd(),
-                    ballSystem.updateCommand()
-                )
+                ballSystem.updateCommand().withDeadline(start.cmd())
             )
         );
 
         start.done().onTrue(
-            bumpStart.cmd()
+            Commands.parallel(
+                ballSystem.updateCommand().withDeadline(bumpStart.cmd()),
+                ballSystem.setIntake(true)
+            )
         );
 
         bumpStart.done().onTrue(
-            intake.cmd()
+            ballSystem.updateCommand().withDeadline(intake.cmd())
         );
 
         intake.done().onTrue(
-            bumpEnd.cmd()
+            ballSystem.updateCommand().withDeadline(bumpEnd.cmd())
         );
 
         bumpEnd.done().onTrue(
             Commands.parallel(
-                aim.cmd(),
+                ballSystem.updateCommand().withDeadline(aim.cmd()),
                 ballSystem.targetSpeed(goalTracker)
             )
         );

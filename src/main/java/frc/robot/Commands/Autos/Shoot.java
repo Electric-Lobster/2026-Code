@@ -4,6 +4,8 @@
 
 package frc.robot.Commands.Autos;
 
+import javax.imageio.plugins.tiff.TIFFDirectory;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.BallSystem;
@@ -39,7 +41,8 @@ public class Shoot extends Command {
 
     ballSystem.update();
 
-    if ((timer.advanceIfElapsed(1) && state == 0) || (timer.advanceIfElapsed(4) && state == 1) ) {
+    if ((timer.get() > 2 && state == 0) || (timer.get() > 6 && state == 1) ) {
+      timer.restart();
       state += 1;
     }
 
