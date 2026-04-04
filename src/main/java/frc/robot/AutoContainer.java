@@ -8,6 +8,7 @@ import choreo.auto.AutoFactory;
 import choreo.auto.AutoRoutine;
 import choreo.auto.AutoTrajectory;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Commands.Autos.AutoShoot;
 import frc.robot.Subsystems.BallSystem;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Utilities.GoalTracker;
@@ -68,6 +69,173 @@ public class AutoContainer {
 
         return routine;
     }
+
+
+    public AutoRoutine startLeft() {
+        AutoRoutine routine = autoFactory.newRoutine("StartLeft");
+        
+        AutoTrajectory start = routine.trajectory("StartLeft");
+        AutoTrajectory bumpStart = routine.trajectory("BumpLeft");
+        AutoTrajectory intake = routine.trajectory("IntakeLeft");
+        AutoTrajectory bumpEnd = routine.trajectory("ReturnBumpRight");
+        AutoTrajectory aim = routine.trajectory("EndRight");
+
+        routine.active().onTrue(
+            Commands.sequence(
+                new AutoShoot(drivetrain, ballSystem, goalTracker),
+                Commands.parallel(
+                    start.cmd(),
+                    ballSystem.updateCommand()
+                )
+            )
+        );
+
+        start.done().onTrue(
+            bumpStart.cmd()
+        );
+
+        bumpStart.done().onTrue(
+            intake.cmd()
+        );
+
+        intake.done().onTrue(
+            bumpEnd.cmd()
+        );
+
+        bumpEnd.done().onTrue(
+            Commands.parallel(
+                aim.cmd(),
+                ballSystem.targetSpeed(goalTracker)
+            )
+        );
+
+        return routine;
+
+    }
+
+    public AutoRoutine startMiddleLeft() {
+        AutoRoutine routine = autoFactory.newRoutine("StartMiddleLeft");
+        
+        AutoTrajectory start = routine.trajectory("StartMiddleLeft");
+        AutoTrajectory bumpStart = routine.trajectory("BumpLeft");
+        AutoTrajectory intake = routine.trajectory("IntakeLeft");
+        AutoTrajectory bumpEnd = routine.trajectory("ReturnBumpRight");
+        AutoTrajectory aim = routine.trajectory("EndRight");
+
+        routine.active().onTrue(
+            Commands.sequence(
+                new AutoShoot(drivetrain, ballSystem, goalTracker),
+                Commands.parallel(
+                    start.cmd(),
+                    ballSystem.updateCommand()
+                )
+            )
+        );
+
+        start.done().onTrue(
+            bumpStart.cmd()
+        );
+
+        bumpStart.done().onTrue(
+            intake.cmd()
+        );
+
+        intake.done().onTrue(
+            bumpEnd.cmd()
+        );
+
+        bumpEnd.done().onTrue(
+            Commands.parallel(
+                aim.cmd(),
+                ballSystem.targetSpeed(goalTracker)
+            )
+        );
+
+        return routine;
+    }
+
+    public AutoRoutine startMiddleRight() {
+        AutoRoutine routine = autoFactory.newRoutine("StartMiddleRight");
+        
+        AutoTrajectory start = routine.trajectory("StartMiddleRIght");
+        AutoTrajectory bumpStart = routine.trajectory("BumpRight");
+        AutoTrajectory intake = routine.trajectory("IntakeRight");
+        AutoTrajectory bumpEnd = routine.trajectory("ReturnBumpLeft");
+        AutoTrajectory aim = routine.trajectory("EndLeft");
+
+        routine.active().onTrue(
+            Commands.sequence(
+                new AutoShoot(drivetrain, ballSystem, goalTracker),
+                Commands.parallel(
+                    start.cmd(),
+                    ballSystem.updateCommand()
+                )
+            )
+        );
+
+        start.done().onTrue(
+            bumpStart.cmd()
+        );
+
+        bumpStart.done().onTrue(
+            intake.cmd()
+        );
+
+        intake.done().onTrue(
+            bumpEnd.cmd()
+        );
+
+        bumpEnd.done().onTrue(
+            Commands.parallel(
+                aim.cmd(),
+                ballSystem.targetSpeed(goalTracker)
+            )
+        );
+
+        return routine;
+    }
+
+    public AutoRoutine startRight() {
+        AutoRoutine routine = autoFactory.newRoutine("StartRight");
+        
+        AutoTrajectory start = routine.trajectory("StartRight");
+        AutoTrajectory bumpStart = routine.trajectory("BumpRight");
+        AutoTrajectory intake = routine.trajectory("IntakeRight");
+        AutoTrajectory bumpEnd = routine.trajectory("ReturnBumpLeft");
+        AutoTrajectory aim = routine.trajectory("EndLeft");
+
+        routine.active().onTrue(
+            Commands.sequence(
+                new AutoShoot(drivetrain, ballSystem, goalTracker),
+                Commands.parallel(
+                    start.cmd(),
+                    ballSystem.updateCommand()
+                )
+            )
+        );
+
+        start.done().onTrue(
+            bumpStart.cmd()
+        );
+
+        bumpStart.done().onTrue(
+            intake.cmd()
+        );
+
+        intake.done().onTrue(
+            bumpEnd.cmd()
+        );
+
+        bumpEnd.done().onTrue(
+            Commands.parallel(
+                aim.cmd(),
+                ballSystem.targetSpeed(goalTracker)
+            )
+        );
+
+        return routine;
+    }
+
 
     public AutoRoutine simpleShoot() {
         AutoRoutine routine = autoFactory.newRoutine("Simple Shoot");
@@ -147,3 +315,4 @@ public class AutoContainer {
         return routine;
     }
 }
+

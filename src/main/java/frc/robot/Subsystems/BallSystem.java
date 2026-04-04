@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Utilities.GoalTracker;
 
 public class BallSystem extends SubsystemBase {
 
@@ -182,19 +183,23 @@ public class BallSystem extends SubsystemBase {
   }
 
   public Command setIntake(boolean set) {
-    return new InstantCommand(() -> this.manualIntake = set, this);
+    return new InstantCommand(() -> this.manualIntake = set);
   }
 
   public Command setShoot(boolean set) {
-    return new InstantCommand(() -> this.shoot = set, this);
+    return new InstantCommand(() -> this.shoot = set);
   }
 
   public Command setFlywheel(boolean set) {
-    return new InstantCommand(() -> this.flywheelOn = set, this);
+    return new InstantCommand(() -> this.flywheelOn = set);
   }
 
   public Command setSpeed(double speed) {
-    return new InstantCommand(() -> this.flywheelDesiredSpeed = speed, this);
+    return new InstantCommand(() -> this.flywheelDesiredSpeed = speed);
+  }
+
+  public Command targetSpeed(GoalTracker goalTracker) {
+    return new RunCommand(() -> this.flywheelDesiredSpeed = goalTracker.getFlywheelSpeed(false));
   }
 
   public Command updateCommand() {
@@ -203,10 +208,10 @@ public class BallSystem extends SubsystemBase {
 
   public Command resetBallSystem() {
     return Commands.sequence(
-      new InstantCommand(() -> this.manualIntake = false, this),
-      new InstantCommand(() -> this.shoot = false, this),
-      new InstantCommand(() -> this.flywheelOn = false, this),
-      new InstantCommand(() -> this.flywheelDesiredSpeed = 0, this),
+      new InstantCommand(() -> this.manualIntake = false),
+      new InstantCommand(() -> this.shoot = false),
+      new InstantCommand(() -> this.flywheelOn = false),
+      new InstantCommand(() -> this.flywheelDesiredSpeed = 0),
       new InstantCommand(() -> this.update(), this)
     );
   }

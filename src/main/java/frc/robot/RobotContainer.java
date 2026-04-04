@@ -51,15 +51,18 @@ public class RobotContainer {
 
   private void configureChooser() {
     
-    m_AutoChooser.addRoutine("SimpleShoot", m_AutoContainer::simpleShoot);
-    m_AutoChooser.addRoutine("Disrupt", m_AutoContainer::disrupt);
-    m_AutoChooser.select("Disrupt");
+    m_AutoChooser.addRoutine("StartLeft", m_AutoContainer::simpleShoot);
+    m_AutoChooser.addRoutine("StartMiddleLeft", m_AutoContainer::simpleShoot);
+    m_AutoChooser.addRoutine("StartMiddleRight", m_AutoContainer::simpleShoot);
+    m_AutoChooser.addRoutine("StartRight", m_AutoContainer::simpleShoot);
+
+    m_AutoChooser.select("StartLeft");
+
     SmartDashboard.putData("AUTO", m_AutoChooser);
   }
 
   public Command getAutonomousCommand() {
     return m_AutoChooser.selectedCommand();
-    //return new Driveback(m_Drivetrain, m_BallSystem, m_GoalTracker);
   }
 
   public Command getTestCommand() {
