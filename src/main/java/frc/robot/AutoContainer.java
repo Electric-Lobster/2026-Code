@@ -10,6 +10,7 @@ import choreo.auto.AutoTrajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Commands.Autos.AutoShoot;
+import frc.robot.Commands.Autos.Intake;
 import frc.robot.Subsystems.BallSystem;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Utilities.GoalTracker;
@@ -39,12 +40,12 @@ public class AutoContainer {
             true,
             drivetrain);
         
-        autoFactory.bind("Intake On", ballSystem.setIntake(true));
-        autoFactory.bind("Intake Off", ballSystem.setIntake(false));
-        autoFactory.bind("Shoot On", ballSystem.setShoot(true));
-        autoFactory.bind("Shoot Off", ballSystem.setShoot(false));
-        autoFactory.bind("Flywheel On", ballSystem.setFlywheel(true));
-        autoFactory.bind("Flywheel Off", ballSystem.setFlywheel(false));
+        autoFactory.bind("Intake On", new Intake(m_BallSystem, true));
+        autoFactory.bind("Intake Off", new Intake(m_BallSystem, false));
+        autoFactory.bind("Shoot On", ballSystem.setShoot(true, ballSystem));
+        autoFactory.bind("Shoot Off", ballSystem.setShoot(false, ballSystem));
+        autoFactory.bind("Flywheel On", ballSystem.setFlywheel(true, ballSystem));
+        autoFactory.bind("Flywheel Off", ballSystem.setFlywheel(false, ballSystem));
         autoFactory.bind("Reset BallSystem", ballSystem.resetBallSystem());
     }
 
@@ -84,15 +85,15 @@ public class AutoContainer {
         routine.active().onTrue(
             Commands.sequence(
                 new AutoShoot(drivetrain, ballSystem, goalTracker),
-                Commands.parallel(
-                    start.cmd(),
-                    ballSystem.updateCommand()
-                )
+                start.cmd()
             )
-        ) ;
+        );
 
         start.done().onTrue(
-            bumpStart.cmd()
+            Commands.parallel(
+                new Intake(ballSystem, true),
+                bumpStart.cmd()
+            )
         );
 
         bumpStart.done().onTrue(
@@ -105,8 +106,9 @@ public class AutoContainer {
 
         bumpEnd.done().onTrue(
             Commands.parallel(
+                new Intake(ballSystem, false),
                 aim.cmd(),
-                ballSystem.targetSpeed(goalTracker)
+                ballSystem.targetSpeed(goalTracker, ballSystem)
             )
         );
 
@@ -126,15 +128,15 @@ public class AutoContainer {
         routine.active().onTrue(
             Commands.sequence(
                 new AutoShoot(drivetrain, ballSystem, goalTracker),
-                Commands.parallel(
-                    start.cmd(),
-                    ballSystem.updateCommand()
-                )
+                start.cmd()
             )
         );
 
         start.done().onTrue(
-            bumpStart.cmd()
+            Commands.parallel(
+                new Intake(ballSystem, true),
+                bumpStart.cmd()
+            )
         );
 
         bumpStart.done().onTrue(
@@ -147,8 +149,9 @@ public class AutoContainer {
 
         bumpEnd.done().onTrue(
             Commands.parallel(
+                new Intake(ballSystem, false),
                 aim.cmd(),
-                ballSystem.targetSpeed(goalTracker)
+                ballSystem.targetSpeed(goalTracker, ballSystem)
             )
         );
 
@@ -167,15 +170,15 @@ public class AutoContainer {
         routine.active().onTrue(
             Commands.sequence(
                 new AutoShoot(drivetrain, ballSystem, goalTracker),
-                Commands.parallel(
-                    start.cmd(),
-                    ballSystem.updateCommand()
-                )
+                start.cmd()
             )
         );
 
         start.done().onTrue(
-            bumpStart.cmd()
+            Commands.parallel(
+                new Intake(ballSystem, true),
+                bumpStart.cmd()
+            )
         );
 
         bumpStart.done().onTrue(
@@ -188,8 +191,9 @@ public class AutoContainer {
 
         bumpEnd.done().onTrue(
             Commands.parallel(
+                new Intake(ballSystem, false),
                 aim.cmd(),
-                ballSystem.targetSpeed(goalTracker)
+                ballSystem.targetSpeed(goalTracker, ballSystem)
             )
         );
 
@@ -205,9 +209,6 @@ public class AutoContainer {
         AutoTrajectory bumpEnd = routine.trajectory("ReturnBumpLeft");
         AutoTrajectory aim = routine.trajectory("EndLeft");
 
-        routine.active().whileTrue(
-            ballSystem.updateCommand()
-        );
 
         routine.active().onTrue(
             Commands.sequence(
@@ -218,8 +219,8 @@ public class AutoContainer {
 
         start.done().onTrue(
             Commands.parallel(
-                bumpStart.cmd(),
-                ballSystem.setIntake(true)
+                new Intake(ballSystem, true),
+                bumpStart.cmd()
             )
         );
 
@@ -233,8 +234,9 @@ public class AutoContainer {
 
         bumpEnd.done().onTrue(
             Commands.parallel(
+                new Intake(ballSystem, false),
                 aim.cmd(),
-                ballSystem.targetSpeed(goalTracker)
+                ballSystem.targetSpeed(goalTracker, ballSystem)
             )
         );
 
