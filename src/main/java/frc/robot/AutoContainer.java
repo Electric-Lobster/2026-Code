@@ -205,31 +205,35 @@ public class AutoContainer {
         AutoTrajectory bumpEnd = routine.trajectory("ReturnBumpLeft");
         AutoTrajectory aim = routine.trajectory("EndLeft");
 
+        routine.active().whileTrue(
+            ballSystem.updateCommand()
+        );
+
         routine.active().onTrue(
             Commands.sequence(
                 new AutoShoot(drivetrain, ballSystem, goalTracker),
-                ballSystem.updateCommand().withDeadline(start.cmd())
+                start.cmd()
             )
         );
 
         start.done().onTrue(
             Commands.parallel(
-                ballSystem.updateCommand().withDeadline(bumpStart.cmd()),
+                bumpStart.cmd(),
                 ballSystem.setIntake(true)
             )
         );
 
         bumpStart.done().onTrue(
-            ballSystem.updateCommand().withDeadline(intake.cmd())
+            intake.cmd()
         );
 
         intake.done().onTrue(
-            ballSystem.updateCommand().withDeadline(bumpEnd.cmd())
+            bumpEnd.cmd()
         );
 
         bumpEnd.done().onTrue(
             Commands.parallel(
-                ballSystem.updateCommand().withDeadline(aim.cmd()),
+                aim.cmd(),
                 ballSystem.targetSpeed(goalTracker)
             )
         );
