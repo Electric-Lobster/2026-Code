@@ -160,7 +160,7 @@ public class AutoContainer {
     public AutoRoutine startMiddleRight() {
         AutoRoutine routine = autoFactory.newRoutine("StartMiddleRight");
         
-        AutoTrajectory start = routine.trajectory("StartMiddleRIght");
+        AutoTrajectory start = routine.trajectory("StartMiddleRight");
         AutoTrajectory bumpStart = routine.trajectory("BumpRight");
         AutoTrajectory intake = routine.trajectory("IntakeRight");
         AutoTrajectory bumpEnd = routine.trajectory("ReturnBumpLeft");
