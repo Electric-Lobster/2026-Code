@@ -182,28 +182,28 @@ public class BallSystem extends SubsystemBase {
     filteredVelocity = (filteredVelocity * 0.95) + (flywheel.getVelocity().getValueAsDouble() * 0.05);
   }
 
-  public Command setIntake(boolean set) {
-    return new InstantCommand(() -> this.manualIntake = set);
+  public Command setIntake(boolean set, BallSystem ballSystem) {
+    return new InstantCommand(() -> ballSystem.manualIntake = set);
   }
 
-  public Command setShoot(boolean set) {
-    return new InstantCommand(() -> this.shoot = set);
+  public Command setShoot(boolean set, BallSystem ballSystem) {
+    return new InstantCommand(() -> ballSystem.shoot = set);
   }
 
-  public Command setFlywheel(boolean set) {
-    return new InstantCommand(() -> this.flywheelOn = set);
+  public Command setFlywheel(boolean set, BallSystem ballSystem) {
+    return new InstantCommand(() -> ballSystem.flywheelOn = set);
   }
 
-  public Command setSpeed(double speed) {
-    return new InstantCommand(() -> this.flywheelDesiredSpeed = speed);
+  public Command setSpeed(double speed, BallSystem ballSystem) {
+    return new InstantCommand(() -> ballSystem.flywheelDesiredSpeed = speed);
   }
 
-  public Command targetSpeed(GoalTracker goalTracker) {
-    return new RunCommand(() -> this.flywheelDesiredSpeed = goalTracker.getFlywheelSpeed(false));
+  public Command targetSpeed(GoalTracker goalTracker, BallSystem ballSystem) {
+    return new RunCommand(() -> ballSystem.flywheelDesiredSpeed = goalTracker.getFlywheelSpeed(false));
   }
 
-  public Command updateCommand() {
-    return new RunCommand(() -> this.update(), this);
+  public Command updateCommand(BallSystem ballSystem) {
+    return new RunCommand(() -> ballSystem.update(), this);
   }
 
   public Command resetBallSystem() {

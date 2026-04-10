@@ -21,7 +21,6 @@ public class AutoShoot extends SequentialCommandGroup {
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new DriveBack(drivetrain));
-    addCommands(new Shoot(ballSystem, goalTracker));
+    addCommands(new DriveBack(drivetrain), new Shoot(ballSystem, goalTracker));
   }
 }

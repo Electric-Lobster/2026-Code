@@ -274,7 +274,6 @@ public class ChoreoDrive {
         odometry.update(new Rotation2d(Math.toRadians(getYaw())), getEncoder(EncoderReturn.kLeftDistance), getEncoder(EncoderReturn.kRightDistance));
         
         field.setRobotPose(getPose());
-
     }
 
 }

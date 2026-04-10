@@ -4,6 +4,7 @@
 
 package frc.robot.Commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -40,6 +41,11 @@ public class DefaultBallSystem extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    if ( !DriverStation.isTeleop() ) {
+      return;
+    }
+
     boolean intake = leftJoy.getRawButton(1);
     boolean reverse = leftJoy.getRawButton(2);
 

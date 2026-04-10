@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.Commands.Autos;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.BallSystem;
@@ -37,7 +36,10 @@ public class Shoot extends Command {
   @Override
   public void execute() {
 
-    if (timer.advanceIfElapsed(1)) {
+    ballSystem.update();
+
+    if ((timer.get() > 2 && state == 0) || (timer.get() > 6 && state == 1) ) {
+      timer.restart();
       state += 1;
     }
 
@@ -62,6 +64,7 @@ public class Shoot extends Command {
   public void end(boolean interrupted) {
     ballSystem.shoot = false;
     ballSystem.flywheelOn = false;
+    ballSystem.update();
   }
 
   // Returns true when the command should end.

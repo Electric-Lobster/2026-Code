@@ -51,10 +51,10 @@ public class RobotContainer {
 
   private void configureChooser() {
     
-    m_AutoChooser.addRoutine("StartLeft", m_AutoContainer::simpleShoot);
-    m_AutoChooser.addRoutine("StartMiddleLeft", m_AutoContainer::simpleShoot);
-    m_AutoChooser.addRoutine("StartMiddleRight", m_AutoContainer::simpleShoot);
-    m_AutoChooser.addRoutine("StartRight", m_AutoContainer::simpleShoot);
+    m_AutoChooser.addRoutine("StartLeft", m_AutoContainer::startLeft);
+    m_AutoChooser.addRoutine("StartMiddleLeft", m_AutoContainer::startMiddleLeft);
+    m_AutoChooser.addRoutine("StartMiddleRight", m_AutoContainer::startMiddleRight);
+    m_AutoChooser.addRoutine("StartRight", m_AutoContainer::startRight);
 
     m_AutoChooser.select("StartLeft");
 
