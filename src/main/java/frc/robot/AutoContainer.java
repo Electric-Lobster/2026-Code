@@ -84,6 +84,7 @@ public class AutoContainer {
         routine.active().onTrue(
             Commands.sequence(
                 new AutoShoot(drivetrain, ballSystem, goalTracker),
+                start.resetOdometry(),
                 start.cmd()
             )
         );
@@ -127,6 +128,7 @@ public class AutoContainer {
         routine.active().onTrue(
             Commands.sequence(
                 new AutoShoot(drivetrain, ballSystem, goalTracker),
+                start.resetOdometry(),
                 start.cmd()
             )
         );
@@ -169,6 +171,7 @@ public class AutoContainer {
         routine.active().onTrue(
             Commands.sequence(
                 new AutoShoot(drivetrain, ballSystem, goalTracker),
+                start.resetOdometry(),
                 start.cmd()
             )
         );
@@ -212,6 +215,7 @@ public class AutoContainer {
         routine.active().onTrue(
             Commands.sequence(
                 new AutoShoot(drivetrain, ballSystem, goalTracker),
+                start.resetOdometry(),
                 start.cmd()
             )
         );
