@@ -64,18 +64,6 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     driveSystem.periodic();
-
-    if (!SmartDashboard.containsKey("P")) { SmartDashboard.putNumber("P", 0); }
-    if (!SmartDashboard.containsKey("I")) { SmartDashboard.putNumber("I", 0); }
-    if (!SmartDashboard.containsKey("D")) { SmartDashboard.putNumber("D", 0); }
-    if (!SmartDashboard.containsKey("S")) { SmartDashboard.putNumber("S", 0); }
-    if (!SmartDashboard.containsKey("V")) { SmartDashboard.putNumber("V", 0); }
-
-    anglePID.setP(SmartDashboard.getNumber("P", 0));
-    anglePID.setI(SmartDashboard.getNumber("I", 0));
-    anglePID.setD(SmartDashboard.getNumber("D", 0));
-    feedFoward.setKs(SmartDashboard.getNumber("S", 0));
-    feedFoward.setKv(SmartDashboard.getNumber("V", 0));
     
     // This method will be called once per scheduler run
   }
