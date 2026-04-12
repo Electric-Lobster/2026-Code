@@ -35,8 +35,8 @@ public class BallSystem extends SubsystemBase {
   TalonFX flywheel = new TalonFX(FLYWHEEL);
 
   //Flywheel Control
-  PIDController flywheelPID = new PIDController(1, 1, 0.15);
-  SimpleMotorFeedforward flywheelFeedforward = new SimpleMotorFeedforward(1.5, 0.1);
+  PIDController flywheelPID = new PIDController(1, 0.05, 0.05);
+  SimpleMotorFeedforward flywheelFeedforward = new SimpleMotorFeedforward(0.1, 0.1);
 
   //System control variables
   public boolean manualIntake = false;
@@ -180,6 +180,21 @@ public class BallSystem extends SubsystemBase {
   public void periodic() {
 
     filteredVelocity = (filteredVelocity * 0.95) + (flywheel.getVelocity().getValueAsDouble() * 0.05);
+  
+    /** Flywheel Tuning
+    if (!SmartDashboard.containsKey("P")) { SmartDashboard.putNumber("P", flywheelPID.getP()); }
+    if (!SmartDashboard.containsKey("I")) { SmartDashboard.putNumber("I", flywheelPID.getI()); }
+    if (!SmartDashboard.containsKey("D")) { SmartDashboard.putNumber("D", flywheelPID.getD()); }
+    if (!SmartDashboard.containsKey("S")) { SmartDashboard.putNumber("S", flywheelFeedforward.getKs()); }
+    if (!SmartDashboard.containsKey("V")) { SmartDashboard.putNumber("V", flywheelFeedforward.getKv()); }
+
+    flywheelPID.setP(SmartDashboard.getNumber("P", 0));
+    flywheelPID.setI(SmartDashboard.getNumber("I", 0));
+    flywheelPID.setD(SmartDashboard.getNumber("D", 0));
+    flywheelFeedforward.setKs(SmartDashboard.getNumber("S", 0));
+    flywheelFeedforward.setKv(SmartDashboard.getNumber("V", 0));
+    */
+  
   }
 
   public Command setIntake(boolean set, BallSystem ballSystem) {
